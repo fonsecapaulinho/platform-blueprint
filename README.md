@@ -19,20 +19,31 @@ npm run build
 npm start
 ```
 
-Não é preciso configurar variáveis de ambiente. O ZIP contém código e lockfile; `node_modules` e `.next` são gerados localmente e não acompanham a entrega.
+Para login Google, configure as variáveis descritas em “Configurar Google OAuth”. Sem OAuth configurado, as telas de e-mail/senha continuam disponíveis no modo mock. O ZIP contém código e lockfile; `node_modules` e `.next` são gerados localmente e não acompanham a entrega.
 
 ## O que está pronto
 
 - `/sign-in`: acesso separado para aluno ou professor, com campos de e-mail e senha, validação e feedback.
+- `/sign-up`: tela de cadastro por e-mail (somente visual nesta etapa) ou cadastro/autenticação Google.
 - `/forgot-password`: solicitação do código de recuperação por e-mail.
 - `/verify-code`: tela separada para informar o código de recuperação.
 - `/reset-password`: tela para criar e confirmar uma nova senha, após a etapa de código.
-- `/demo-access`: final ilustrativo do login. É uma página pública, não um dashboard protegido.
+- `/demo-access`: final ilustrativo do login mock.
+- `/dashboard`: área de destino protegida pela sessão Google.
 - Página 404, alternância entre PT-BR e EN-US, componentes reutilizáveis e tokens do design system.
 
-O foco é layout e componentes. Google OAuth, cadastro, banco, API, dashboard, persistência e testes automatizados não foram adicionados. O mock de autenticação é interno e não exibe credenciais de acesso na interface.
+O login/cadastro Google usa Auth.js e sessão JWT assinada em cookie. O acesso Google precisa de um projeto OAuth do Google configurado no ambiente da aplicação; consulte “Configurar Google OAuth” abaixo. Cadastro por e-mail, banco de dados e persistência de perfis ainda não estão conectados. O mock de e-mail/senha é interno e não exibe credenciais de acesso na interface.
 
-Os formulários não enviam dados pela rede nem os salvam em cookies ou local/sessionStorage. A recuperação e a verificação do código são apenas prévias: não há envio de e-mail nem validação real do código. A redefinição também não altera a senha. O mock não representa segurança, sessão ou autorização.
+O OAuth envia o usuário ao Google e cria uma sessão de aplicação após o callback. Os formulários de e-mail/senha e cadastro não estão conectados a um backend. A recuperação e a verificação do código são apenas prévias: não há envio de e-mail nem validação real do código. A redefinição também não altera a senha.
+
+### Configurar Google OAuth
+
+1. Crie um OAuth Client ID do tipo **Web application** no Google Cloud Console.
+2. Cadastre `http://localhost:3000/api/auth/callback/google` como **Authorized redirect URI**. Em produção, cadastre também `https://SEU-DOMINIO/api/auth/callback/google`.
+3. Copie `.env.example` para `.env.local`, preencha `AUTH_GOOGLE_ID` e `AUTH_GOOGLE_SECRET` com as credenciais desse cliente e defina `AUTH_SECRET` com um valor aleatório seguro (`npx auth secret`).
+4. Reinicie o servidor Next.js. Em produção, defina as mesmas variáveis no gerenciador de secrets do provedor de hospedagem; nunca as publique no repositório.
+
+Sem essas credenciais, o botão Google informa que a integração precisa de configuração. O cadastro por Google cria uma sessão autenticada, mas contas, perfis e permissões ainda não são persistidos em banco de dados.
 
 ## Estrutura
 
@@ -54,15 +65,15 @@ docs/
 
 ## Dependências
 
-Runtime: **Next.js 16.4.0, React 19.3.0 e React DOM 19.3.0**. Desenvolvimento: TypeScript 5.9.3 e tipos de Node/React. As versões estão fixadas no manifesto e no lockfile.
+Runtime: **Next.js 16.4.0, React 19.3.0, React DOM 19.3.0 e Auth.js 5.0.0-beta.32**. Desenvolvimento: TypeScript 5.9.3 e tipos de Node/React. As versões estão fixadas no manifesto e no lockfile.
 
-Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. CSS Modules e HTML nativo atendem esta etapa com poucas dependências. Cada componente mantém seus textos PT-BR/EN-US em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
+Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. Auth.js atende ao OAuth Google com uma dependência. CSS Modules e HTML nativo atendem a interface. Cada componente mantém seus textos PT-BR/EN-US em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
 
 ## Próximos passos
 
 1. Revisar identidade, conteúdo e layout com o cliente.
 2. Refinar componentes com base na revisão.
-3. Integrar o envio e a validação do código de recuperação com expiração e uso único.
-4. Substituir o contrato mock por integração segura, adicionar autorização no servidor e testes dos fluxos acordados.
+3. Persistir usuários, perfis e papéis (aluno/professor) em um banco de dados.
+4. Integrar cadastro por e-mail e envio/validação do código de recuperação com expiração e uso único.
 
 As páginas continuam pré-renderizadas pelo Next.js. O seletor de idioma, os formulários e os controles de senha usam interatividade no cliente, sem transformar o conteúdo inteiro em Client Component.

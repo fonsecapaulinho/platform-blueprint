@@ -17,6 +17,15 @@
 .inlineLink { font-size: .8125rem; font-weight: 600; }
 .learningHint { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; color: var(--color-muted); font-size: .8125rem; }
 .learningHint > span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--color-primary-soft); color: var(--color-primary); font-size: .6875rem; font-weight: 750; letter-spacing: -.04em; }
+.googleButton { border-color: var(--color-border); }
+.oauthForm { margin-bottom: 16px; }
+.googleMark { font-size: 1rem; font-weight: 750; color: #4285f4; }
+.divider { display: flex; align-items: center; gap: 12px; color: var(--color-muted); font-size: .75rem; }
+.divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: var(--color-border); }
+.signupPrompt { margin-top: 18px; color: var(--color-muted); font-size: .8125rem; text-align: center; }
+.userIdentity { margin-top: -8px; font-weight: 650; overflow-wrap: anywhere; }
+.userEmail { margin-top: 5px; color: var(--color-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.signOutButton { min-height: 46px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: white; color: var(--color-ink); font-weight: 650; }
 .rolePicker { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-soft); }
 .rolePicker button { min-height: 42px; border: 0; border-radius: calc(var(--radius-sm) - 3px); background: transparent; color: var(--color-muted); font-size: .875rem; font-weight: 600; }
 .rolePicker button[aria-pressed="true"] { background: white; color: var(--color-ink); box-shadow: 0 1px 4px rgb(16 24 40 / 12%); }
@@ -35,11 +44,17 @@
 }
 @media (max-width: 360px) { .shell { padding: 0 12px; } .card { padding: 22px 18px; } }
 @media (max-height: 620px) {
-  .header { min-height: 48px; }
-  .main { padding-top: 4px; padding-bottom: 8px; }
-  .card { padding: 16px 20px; }
-  .learningHint { margin-bottom: 12px; }
-  .formHeader { margin-bottom: 12px; }
-  .form { gap: 10px; }
-  .backRow { margin-top: 6px; }
+  .header { min-height: 44px; }
+  .main { padding-top: 4px; padding-bottom: 4px; }
+  .card { padding: 12px 20px; }
+  .learningHint { display: none; }
+  .formHeader { margin-bottom: 8px; }
+  .form { gap: 8px; }
+  .backRow, .signupPrompt { margin-top: 4px; }
+  .oauthForm { margin-bottom: 8px; }
+  .button { min-height: 42px; padding: 8px 14px; }
+  .input { min-height: 42px; padding: 8px 12px; }
+  .reveal { top: 1px; height: 40px; }
+  .rolePicker button { min-height: 34px; }
+  .learningHint > span { width: 24px; height: 24px; }
 }

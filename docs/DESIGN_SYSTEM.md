@@ -15,13 +15,13 @@ Referência visual: experiência de login compacta e centralizada, fundo lavanda
 | `--color-canvas` | `#F3F0FF` | Fundo lavanda |
 | `--color-surface` | `#FFFFFF` | Cartões e campos |
 | `--color-surface-soft` | `#F8F7FC` | Superfícies secundárias |
-| `--color-primary` | `#6541CF` | Ações, links e foco |
+| `--color-primary` | `#6541CF` | Ações e links |
 | `--color-primary-hover` | `#5030AD` | Hover das ações |
 | `--color-primary-soft` | `#ECE5FF` | Fundo de ícones |
 | `--color-ink` | `#252333` | Texto principal |
 | `--color-muted` | `#646174` | Texto secundário |
 | `--color-border` | `#DCD8E8` | Divisórias decorativas |
-| `--color-input-border` | `#9690A7` | Limite dos campos |
+| `--color-input-border` | `#9690A7` | Limite dos campos e foco neutro |
 | `--color-accent` | `#F9DC89` | Destaque editorial, não texto claro |
 | `--color-danger` | `#A42C3C` | Erro com mensagem textual |
 | `--color-success` | `#21644C` | Confirmação com mensagem textual |

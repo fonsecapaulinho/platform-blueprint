@@ -3,8 +3,8 @@
 ## O que foi feito
 
 - Não há chaves de API, dados de alunos ou segredos.
-- Nenhuma senha é enviada a um serviço ou armazenada pela aplicação.
-- Não há persistência, cookies de sessão, logs de credenciais ou analytics.
+- A senha de acesso por e-mail só é comparada pelo mock; cadastro e autenticação por e-mail não são enviados a um serviço nem persistidos.
+- A sessão OAuth usa o cookie de sessão seguro do Auth.js; não há banco de dados, logs de credenciais ou analytics.
 - Inputs são renderizados como texto por React; não se usa `dangerouslySetInnerHTML`.
 - Destinos de navegação são fixos; não há parâmetro de redirecionamento arbitrário.
 - Campos têm limites de comprimento. Recuperação retorna confirmação genérica, sem revelar existência de conta.
@@ -15,18 +15,19 @@
 
 ## Limites
 
-`/demo-access` e `/reset-password` são públicas. O mock valida valores no navegador, acessíveis no bundle. `/verify-code` valida apenas o formato na prévia e não confirma códigos recebidos. Não usar essa implementação como autenticação real nem cadastrar usuários reais.
+`/demo-access` é uma página pública do mock. O mock de e-mail/senha valida valores no navegador, acessíveis no bundle. `/verify-code` valida apenas o formato na prévia e não confirma códigos recebidos. `/reset-password` não altera senhas.
+
+O login Google usa Auth.js, OpenID Connect e sessão JWT em cookie. Configure `AUTH_SECRET`, `AUTH_GOOGLE_ID` e `AUTH_GOOGLE_SECRET` fora do repositório. O callback `/dashboard` exige sessão. Não há banco/adapter: identidade e perfil do usuário não são persistidos e os papéis aluno/professor ainda não são autorizados pelo servidor. Cadastro por e-mail, recuperação por e-mail e códigos de uso único aguardam backend.
 
 O contrato `AuthService` é propositalmente pequeno. A API real de recuperação/redefinição precisará acrescentar token, expiração e tratamento de sessão; não conectar o método demonstrativo de redefinição diretamente a uma conta real.
 
 ## Antes de operar com alunos
 
-- Escolher autenticação gerenciada ou implementar uma estratégia de sessão no servidor.
-- Aplicar autorização por usuário no servidor/banco, independentemente da interface.
-- Implementar cookies seguros conforme arquitetura, proteção contra abuso e validação de entrada no servidor.
+- Persistir identidade, perfis e papéis aluno/professor num banco de dados e aplicar autorização no servidor.
+- Conectar cadastro por e-mail, proteção contra abuso e validação de entrada no servidor.
 - Implementar tokens de recuperação de uso único, expiração e confirmação genérica; validar tudo no servidor.
 - Definir política de senha, HTTPS, CSP completa compatível com Next.js e controles de logs/privacidade.
 - Remover credenciais e telas de demonstração do caminho de produção.
 - Rever Permissions-Policy quando áudio/microfone entrar no escopo.
 
-Nenhum pacote de segurança ou autenticação foi adicionado apenas para simular proteção. Atualizações de dependências e auditoria de produção continuam sendo trabalho recorrente.
+Auth.js fornece a integração OAuth e sessão; as demais proteções de produção continuam sendo trabalho recorrente.

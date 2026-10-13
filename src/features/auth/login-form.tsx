@@ -14,8 +14,9 @@ import { mockAuthService } from "./mock-auth-service";
 import { loginMessages } from "./login-form.translations";
 import { emailError } from "./validation";
 import styles from "@/components/auth/auth.module.css";
+import { signInWithGoogle } from "@/app/(auth)/actions";
 
-export function LoginForm() {
+export function LoginForm({ googleError }: { googleError?: "not-configured" | "failed" }) {
   const router = useRouter();
   const { locale } = useLocale();
   const messages = loginMessages[locale];
@@ -55,6 +56,14 @@ export function LoginForm() {
   return <>
     <div className={styles.learningHint}><span aria-hidden="true">Aa</span>{messages.learningHint}</div>
     <FormHeader title={messages.title} description={messages.description}/>
+    {googleError && <Feedback tone="error">{googleError === "not-configured" ? messages.googleNotConfigured : messages.googleFailed}</Feedback>}
+    <form action={signInWithGoogle} className={styles.oauthForm}>
+      <input type="hidden" name="flow" value="sign-in"/>
+      <Button type="submit" variant="secondary" className={styles.googleButton}>
+        <span className={styles.googleMark} aria-hidden="true">G</span>{messages.google}
+      </Button>
+    </form>
+    <div className={styles.divider}><span>{messages.divider}</span></div>
     <form onSubmit={submit} className={styles.form} noValidate aria-label={messages.formLabel}>
       <div>
         <span className={styles.roleLabel} id="login-role-label">{messages.roleLabel}</span>
@@ -70,5 +79,6 @@ export function LoginForm() {
       <Button type="submit" pending={pending}>{pending ? messages.pending : messages.submit}{!pending && <Icon name="arrow"/>}</Button>
       <span role="status" className={styles.statusText}>{pending ? messages.status : ""}</span>
     </form>
+    <p className={styles.signupPrompt}>{messages.signupPrompt} <Link href="/sign-up">{messages.signupLink}</Link></p>
   </>;
 }
