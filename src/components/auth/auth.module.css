@@ -12,6 +12,8 @@
 .statusText { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .forgot { text-align: right; margin-top: -8px; font-size: .8125rem; font-weight: 600; }
 .back { display: inline-flex; min-height: 44px; gap: 8px; align-items: center; font-size: .875rem; font-weight: 600; }
+.stepBack { display: block; min-height: 44px; margin: 8px auto 0; padding: 8px 16px; border: 0; background: transparent; color: var(--color-muted); font-size: .875rem; font-weight: 600; }
+.stepBack:hover { color: var(--color-primary); }
 .backRow { margin-top: 16px; text-align: center; }
 .recoveryPrompt { color: var(--color-muted); font-size: .8125rem; }
 .inlineLink { font-size: .8125rem; font-weight: 600; }

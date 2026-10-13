@@ -2,7 +2,7 @@
 
 ## Escopo
 
-Aplicação BLUEPRINT com Next.js App Router, TypeScript estrito, CSS Modules e traduções PT-BR/EN-US. Inclui login e início de cadastro Google com Auth.js, sessão JWT e destino `/dashboard` protegido. O cadastro por e-mail, banco de dados, perfis e papéis não estão conectados.
+Aplicação BLUEPRINT com Next.js App Router, TypeScript estrito, CSS Modules e traduções PT-BR/EN-US. Inclui login e início de cadastro Google com Auth.js, sessão JWT e destino `/dashboard` protegido. O cadastro por e-mail em `/sign-up` e `/complete-sign-up` é uma prévia visual; banco de dados, consulta de conta, envio/validação de código e criação de usuário não estão conectados.
 
 Fluxos de recuperação em `/forgot-password`, `/verify-code` e `/reset-password` permanecem prévias, sem envio ou validação de código.
 
@@ -21,10 +21,10 @@ As verificações de build/tipos não são testes automatizados. Nenhuma credenc
 
 - Login revisado em viewport mobile 320 × 568, sem rolagem.
 - Campos mantêm foco visível cinza neutro; a borda/foco roxo foi removida.
-- Cadastro por e-mail valida os campos no cliente e informa claramente que não cria conta sem backend.
+- Cadastro por e-mail permite seguir da identidade à etapa de código e ao formulário final em `/complete-sign-up`, com nome/e-mail preenchidos; os dados de prévia ficam no `sessionStorage` da aba. Não há link de e-mail ativo e a interface avisa que não envia/valida códigos nem cria conta.
 - A tela de cadastro permite selecionar aluno/professor; a escolha acompanha o início de cadastro Google.
 - O ícone oficial multicolorido do Google aparece nos botões de login e cadastro.
-- Textos auxiliares removidos a pedido, e login/cadastro verificados sem rolagem em 320 × 568.
+- Textos auxiliares removidos a pedido; login verificado sem rolagem em 320 × 568. O cadastro detalhado é dividido em etapas.
 - Botões Google exibem instrução localizada quando as variáveis OAuth não estão configuradas.
 - Cadastro com Google usa o mesmo provider OAuth, com retorno à área `/dashboard`.
 
