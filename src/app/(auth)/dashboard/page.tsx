@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
-import { AuthCard } from "@/components/auth/auth-shell";
+import { AuthCard } from "@/shared/layout/auth-shell";
 import { DashboardView } from "@/features/auth/dashboard-view";
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ role?: string }> }) {

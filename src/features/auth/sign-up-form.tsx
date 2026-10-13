@@ -3,19 +3,19 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { GoogleIcon } from "@/components/brand/google-icon";
-import { TextField } from "@/components/ui/text-field";
-import { SelectField, type SelectOption } from "@/components/ui/select-field";
-import { PasswordField } from "@/components/ui/password-field";
-import { Feedback } from "@/components/ui/feedback";
-import { FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
-import { signInWithGoogle } from "@/app/(auth)/actions";
+import { Button } from "@/shared/ui/button";
+import { GoogleIcon } from "@/shared/brand/google-icon";
+import { TextField } from "@/shared/ui/text-field";
+import { SelectField, type SelectOption } from "@/shared/ui/select-field";
+import { PasswordField } from "@/shared/ui/password-field";
+import { Feedback } from "@/shared/ui/feedback";
+import { FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
+import { signInWithGoogle } from "@/features/auth/actions";
 import { signUpMessages } from "./sign-up-form.translations";
 import { getCountryOptions } from "./country-options";
 import { emailError, newPasswordError } from "./validation";
-import styles from "@/components/auth/auth.module.css";
+import styles from "@/shared/layout/auth.module.css";
 
 type SignUpStep = "identity" | "code" | "account" | "done";
 type SignUpErrors = {

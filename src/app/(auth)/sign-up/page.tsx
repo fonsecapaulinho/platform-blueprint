@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AuthCard } from "@/components/auth/auth-shell";
+import { AuthCard } from "@/shared/layout/auth-shell";
 import { SignUpForm } from "@/features/auth/sign-up-form";
 
 export const metadata: Metadata = { title: "Create account" };

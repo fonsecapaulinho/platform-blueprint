@@ -3,12 +3,12 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { TextField } from "@/components/ui/text-field";
-import { FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
+import { Button } from "@/shared/ui/button";
+import { TextField } from "@/shared/ui/text-field";
+import { FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
 import { verifyCodeMessages } from "./verify-code-form.translations";
-import styles from "@/components/auth/auth.module.css";
+import styles from "@/shared/layout/auth.module.css";
 
 export function VerifyCodeForm() {
   const router = useRouter();

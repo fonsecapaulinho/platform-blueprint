@@ -50,31 +50,34 @@ Sem essas credenciais, o botão Google informa que a integração precisa de con
 
 ```text
 src/
-  app/                    Rotas, metadados, layout raiz e página 404
-    (auth)/               Layout compartilhado de acesso
-  components/
-    auth/                 AuthShell and fixed English (US) locale
-    brand/                Marca tipográfica provisória
-    ui/                   Button, TextField, PasswordField, Feedback e Icon
-  features/auth/          Formulários, validação, mock e traduções junto aos formulários
-  styles/tokens.css       Cores, tipografia, espaçamento e acabamento
-docs/
-  DESIGN_SYSTEM.md         Decisões de design e composição
-  SECURITY_AND_SCOPE.md    Limites do mock e integração futura
-  DELIVERY.md              Verificações e escopo da entrega
+  app/                      Next.js App Router: routes, layouts, metadata, API
+  features/
+    auth/                   Sign-in/up, recovery, dashboard, validation, actions
+    demo-access/            Demo sign-in feature
+    not-found/              Not-found feature
+  shared/
+    brand/                  BLUEPRINT and Google brand marks
+    layout/                 Auth shell, locale provider, skip link
+    styles/                 Design tokens
+    ui/                     Reusable form and feedback controls
+.vscode/
+  settings.json             Hide generated output and local-only files
+docs/                       Design, delivery, and security documentation
 ```
 
-## Dependências
+The project uses a feature-based architecture adapted to Next.js App Router: `app` owns routing, `features` own user-facing flows and their behavior, and `shared` contains reusable presentation modules. NextAuth configuration stays in the repository-root `auth.ts`, following the framework's conventional entry point. `.vscode/settings.json` hides generated/dependency output and local environment files in Explorer and search; it does not hide source files.
+
+## Dependencies
 
 Runtime: **Next.js 16.4.0, React 19.3.0, React DOM 19.3.0 e Auth.js 5.0.0-beta.32**. Desenvolvimento: TypeScript 5.9.3 e tipos de Node/React. As versões estão fixadas no manifesto e no lockfile.
 
 Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. Auth.js atende ao OAuth Google com uma dependência. CSS Modules e HTML nativo atendem a interface. Cada componente mantém seus textos em inglês (EUA) em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
 
-## Próximos passos
+## Next steps
 
 1. Revisar identidade, conteúdo e layout com o cliente.
 2. Refinar componentes com base na revisão.
 3. Persistir usuários, perfis e papéis (aluno/professor) em um banco de dados.
 4. Integrar cadastro por e-mail e envio/validação do código de recuperação com expiração e uso único.
 
-As páginas continuam pré-renderizadas pelo Next.js. Os formulários e controles de senha usam interatividade no cliente, sem transformar o conteúdo inteiro em Client Component.
+Pages remain prerendered by Next.js where possible. Forms and password controls use client interactivity without turning the entire page into a Client Component.

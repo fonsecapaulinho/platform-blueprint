@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { LocaleProvider } from "@/components/auth/locale-provider";
-import { SkipLink } from "@/components/auth/skip-link";
+import { LocaleProvider } from "@/shared/layout/locale-provider";
+import { SkipLink } from "@/shared/layout/skip-link";
 
 export const metadata: Metadata = {
   title: { default: "BLUEPRINT", template: "%s | BLUEPRINT" },

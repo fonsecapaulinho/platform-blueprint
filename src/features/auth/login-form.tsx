@@ -3,19 +3,19 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { GoogleIcon } from "@/components/brand/google-icon";
-import { TextField } from "@/components/ui/text-field";
-import { PasswordField } from "@/components/ui/password-field";
-import { Feedback } from "@/components/ui/feedback";
-import { Icon } from "@/components/ui/icon";
-import { FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
+import { Button } from "@/shared/ui/button";
+import { GoogleIcon } from "@/shared/brand/google-icon";
+import { TextField } from "@/shared/ui/text-field";
+import { PasswordField } from "@/shared/ui/password-field";
+import { Feedback } from "@/shared/ui/feedback";
+import { Icon } from "@/shared/ui/icon";
+import { FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
 import { mockAuthService } from "./mock-auth-service";
 import { loginMessages } from "./login-form.translations";
 import { emailError } from "./validation";
-import styles from "@/components/auth/auth.module.css";
-import { signInWithGoogle } from "@/app/(auth)/actions";
+import styles from "@/shared/layout/auth.module.css";
+import { signInWithGoogle } from "@/features/auth/actions";
 
 export function LoginForm({ googleError }: { googleError?: "not-configured" | "failed" }) {
   const router = useRouter();

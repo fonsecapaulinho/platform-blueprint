@@ -1,4 +1,4 @@
-@import "../styles/tokens.css";
+@import "../shared/styles/tokens.css";
 
 * { box-sizing: border-box; }
 html { min-width: 320px; background: var(--color-canvas); }

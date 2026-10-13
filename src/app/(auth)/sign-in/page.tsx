@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AuthCard } from "@/components/auth/auth-shell";
+import { AuthCard } from "@/shared/layout/auth-shell";
 import { LoginForm } from "@/features/auth/login-form";
 
 export const metadata: Metadata = { title: "Sign in" };

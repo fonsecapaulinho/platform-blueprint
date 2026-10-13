@@ -1,12 +1,12 @@
-# Registro da entrega · 13/10/2026
+# Delivery record · 10/13/2026
 
-## Escopo
+## Scope
 
 BLUEPRINT app using Next.js App Router, strict TypeScript, CSS Modules, and an English (US)-only interface. Includes Google login and sign-up through Auth.js, JWT sessions, and a protected `/dashboard` destination. Email sign-up at `/sign-up` and `/complete-sign-up` is a visual preview; the database, account lookup, code delivery/verification, and user creation are not connected.
 
 Fluxos de recuperação em `/forgot-password`, `/verify-code` e `/reset-password` permanecem prévias, sem envio ou validação de código.
 
-## Verificações
+## Verification
 
 - `npm run build`: concluído; rotas de OAuth, login, cadastro e dashboard compiladas.
 - `npm run typecheck`: concluído sem erros.
@@ -17,7 +17,7 @@ Fluxos de recuperação em `/forgot-password`, `/verify-code` e `/reset-password
 
 As verificações de build/tipos não são testes automatizados. Nenhuma credencial OAuth real foi adicionada ao repositório.
 
-## Revisão visual e funcional
+## Visual and functional review
 
 - Login revisado em viewport mobile 320 × 568, sem rolagem.
 - Focused fields highlight their green border without an additional ring.
@@ -31,10 +31,10 @@ As verificações de build/tipos não são testes automatizados. Nenhuma credenc
 
 Não é uma execução de suíte automatizada, medição Lighthouse, auditoria completa de acessibilidade ou teste em dispositivo físico.
 
-## OAuth Google
+## Google OAuth
 
 Copie `.env.example` para `.env.local`, preencha os segredos e configure o callback URI no Google Cloud Console. Consulte as instruções no README. Para produção, use o gerenciador de secrets da hospedagem.
 
-## Pacote
+## Package
 
 O ZIP inclui código-fonte, `package-lock.json`, `.env.example`, configuração e documentação. Exclui `node_modules`, `.next`, Git, `.env.local` e arquivos temporários. Execute `npm ci` após extrair o ZIP.

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { AuthCard, FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
-import { Feedback } from "@/components/ui/feedback";
-import { Icon } from "@/components/ui/icon";
-import styles from "@/components/auth/auth.module.css";
+import { AuthCard, FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
+import { Feedback } from "@/shared/ui/feedback";
+import { Icon } from "@/shared/ui/icon";
+import styles from "@/shared/layout/auth.module.css";
 import { demoViewMessages } from "./demo-view.translations";
 
 export function DemoView() {

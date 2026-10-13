@@ -1,10 +1,10 @@
 "use client";
 
-import { FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
-import { signOutUser } from "@/app/(auth)/actions";
+import { FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
+import { signOutUser } from "@/features/auth/actions";
 import { dashboardMessages } from "./dashboard-view.translations";
-import styles from "@/components/auth/auth.module.css";
+import styles from "@/shared/layout/auth.module.css";
 
 export function DashboardView({ name, email, role }: { name: string; email: string; role?: "student" | "teacher" }) {
   const { locale } = useLocale();

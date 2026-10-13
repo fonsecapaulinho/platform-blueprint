@@ -1,6 +1,6 @@
 "use client";
 
-import { Brand } from "@/components/brand/brand";
+import { Brand } from "@/shared/brand/brand";
 import styles from "./auth.module.css";
 
 export function AuthShell({ children }: { children: React.ReactNode }) {

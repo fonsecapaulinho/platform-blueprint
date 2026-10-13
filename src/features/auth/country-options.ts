@@ -1,5 +1,5 @@
-import type { Locale } from "@/components/auth/locale";
-import type { SelectOption } from "@/components/ui/select-field";
+import type { Locale } from "@/shared/layout/locale";
+import type { SelectOption } from "@/shared/ui/select-field";
 
 const countryCodes = `
 AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ

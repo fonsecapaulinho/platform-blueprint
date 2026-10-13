@@ -1,4 +1,4 @@
-import type { Locale } from "@/components/auth/locale";
+import type { Locale } from "@/shared/layout/locale";
 
 export const dashboardMessages: Record<Locale, { title: string; description: string; signOut: string; student: string; teacher: string }> = {
   "en-US": {

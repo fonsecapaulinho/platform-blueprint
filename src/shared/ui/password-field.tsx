@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "@/components/auth/locale-provider";
+import { useLocale } from "@/shared/layout/locale-provider";
 import { TextField, type TextFieldProps } from "./text-field";
 import { Icon } from "./icon";
 import styles from "./ui.module.css";

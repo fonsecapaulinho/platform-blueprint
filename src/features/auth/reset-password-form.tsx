@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { PasswordField } from "@/components/ui/password-field";
-import { Feedback } from "@/components/ui/feedback";
-import { Icon } from "@/components/ui/icon";
-import { FormHeader } from "@/components/auth/auth-shell";
-import { useLocale } from "@/components/auth/locale-provider";
+import { Button } from "@/shared/ui/button";
+import { PasswordField } from "@/shared/ui/password-field";
+import { Feedback } from "@/shared/ui/feedback";
+import { Icon } from "@/shared/ui/icon";
+import { FormHeader } from "@/shared/layout/auth-shell";
+import { useLocale } from "@/shared/layout/locale-provider";
 import { mockAuthService } from "./mock-auth-service";
 import { resetPasswordMessages } from "./reset-password-form.translations";
 import { newPasswordError } from "./validation";
-import styles from "@/components/auth/auth.module.css";
+import styles from "@/shared/layout/auth.module.css";
 
 export function ResetPasswordForm() {
   const { locale } = useLocale();

@@ -1,4 +1,4 @@
-import type { Locale } from "@/components/auth/locale";
+import type { Locale } from "@/shared/layout/locale";
 
 export const recoveryMessages = {
   "en-US": {
