@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LocaleProvider } from "@/components/auth/locale-provider";
+import { SkipLink } from "@/components/auth/skip-link";
 
 export const metadata: Metadata = {
   title: { default: "Fonseca | Aprenda com propósito", template: "%s | Fonseca" },
@@ -8,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="pt-BR"><body><a className="skip-link" href="#main-content">Pular para o conteúdo</a>{children}</body></html>;
+  return <html lang="pt-BR"><body><LocaleProvider><SkipLink/>{children}</LocaleProvider></body></html>;
 }

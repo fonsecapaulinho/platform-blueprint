@@ -23,24 +23,15 @@ Não é preciso configurar variáveis de ambiente. O ZIP contém código e lockf
 
 ## O que está pronto
 
-- `/login`: campos de e-mail e senha, mostrar/ocultar senha, validação, processamento e erro de credenciais.
-- `/recuperar-conta`: solicitação e confirmação genérica, sem envio de e-mail.
-- `/redefinir-senha`: prévia pública para criar/confirmar uma senha fictícia; não altera conta alguma.
+- `/login`: acesso separado para aluno ou professor, com campos de e-mail e senha, validação e feedback.
+- `/recuperar-conta`: solicitação e confirmação; o envio de código será integrado posteriormente.
+- `/redefinir-senha`: prévia com campo para código e nova senha; não valida o código nem altera uma conta.
 - `/acesso-demo`: final ilustrativo do login. É uma página pública, não um dashboard protegido.
-- Página 404, estrutura responsiva, componentes reutilizáveis e tokens do design system.
+- Página 404, alternância entre PT-BR e EN-US, componentes reutilizáveis e tokens do design system.
 
-O foco é layout e componentes. Google OAuth, cadastro, escolha de papel, banco, API, dashboard, persistência e testes automatizados não foram adicionados.
+O foco é layout e componentes. Google OAuth, cadastro, banco, API, dashboard, persistência e testes automatizados não foram adicionados. O mock de autenticação é interno e não exibe credenciais de acesso na interface.
 
-## Experimentar o mock
-
-| Campo | Valor fictício |
-| --- | --- |
-| E-mail | `aluno@example.com` |
-| Senha | `Demo123!` |
-
-Outros dados produzem erro de login. A recuperação aceita qualquer e-mail válido e sempre usa a mesma confirmação. A redefinição valida 8–128 caracteres e igualdade, mas **não muda a senha do mock**. Não use credenciais pessoais. Há um atraso de 650 ms apenas para demonstrar o carregamento.
-
-Nada é enviado por rede pelos formulários, salvo em cookies ou gravado em local/sessionStorage. As credenciais acima são públicas por definição. O mock não representa segurança, sessão ou autorização.
+Os formulários não enviam dados pela rede nem os salvam em cookies ou local/sessionStorage. A recuperação não envia e-mail; o código é validado apenas quanto ao formato na tela de prévia. O mock não representa segurança, sessão ou autorização.
 
 ## Estrutura
 
@@ -49,10 +40,10 @@ src/
   app/                    Rotas, metadados, layout raiz e página 404
     (auth)/               Layout compartilhado de acesso
   components/
-    auth/                 AuthShell, AuthCard, FormHeader e composição visual
+    auth/                 AuthShell, seletor de idioma e contexto PT-BR/EN-US
     brand/                Marca tipográfica provisória
     ui/                   Button, TextField, PasswordField, Feedback e Icon
-  features/auth/          Formulários, validação e contrato/mock de autenticação
+  features/auth/          Formulários, validação, mock e traduções junto aos formulários
   styles/tokens.css       Cores, tipografia, espaçamento e acabamento
 docs/
   DESIGN_SYSTEM.md         Decisões de design e composição
@@ -64,13 +55,13 @@ docs/
 
 Runtime: **Next.js 16.4.0, React 19.3.0 e React DOM 19.3.0**. Desenvolvimento: TypeScript 5.9.3 e tipos de Node/React. As versões estão fixadas no manifesto e no lockfile.
 
-Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. CSS Modules e HTML nativo atendem esta etapa com poucas dependências.
+Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. CSS Modules e HTML nativo atendem esta etapa com poucas dependências. Cada componente mantém seus textos PT-BR/EN-US em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
 
 ## Próximos passos
 
 1. Revisar identidade, conteúdo e layout com o cliente.
 2. Refinar componentes com base na revisão.
-3. Introduzir testes Cypress dos fluxos acordados, em etapa própria.
-4. Substituir o contrato mock por integração segura; adicionar recuperação por token e autorização no servidor.
+3. Integrar o envio e a validação do código de recuperação com expiração e uso único.
+4. Substituir o contrato mock por integração segura, adicionar autorização no servidor e testes dos fluxos acordados.
 
-As páginas são pré-renderizadas pelo Next.js; somente formulários e comportamento de senha precisam de interatividade no cliente. Evite transformar o layout inteiro em Client Component.
+As páginas continuam pré-renderizadas pelo Next.js. O seletor de idioma, os formulários e os controles de senha usam interatividade no cliente, sem transformar o conteúdo inteiro em Client Component.
