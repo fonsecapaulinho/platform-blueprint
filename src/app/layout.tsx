@@ -4,8 +4,8 @@ import { LocaleProvider } from "@/components/auth/locale-provider";
 import { SkipLink } from "@/components/auth/skip-link";
 
 export const metadata: Metadata = {
-  title: { default: "Fonseca | Aprenda com propósito", template: "%s | Fonseca" },
-  description: "Seu espaço de aprendizagem de inglês. Aulas com propósito, prática e acompanhamento próximo.",
+  title: { default: "BLUEPRINT", template: "%s | BLUEPRINT" },
+  description: "Your English learning space. Build confidence through practical English.",
   robots: { index: false, follow: false },
 };
 

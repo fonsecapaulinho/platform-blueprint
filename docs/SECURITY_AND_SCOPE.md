@@ -15,7 +15,7 @@
 
 ## Limites
 
-`/acesso-demo` e `/redefinir-senha` são públicas. O mock valida valores no navegador, acessíveis no bundle. Não usar essa implementação como autenticação real nem cadastrar usuários reais.
+`/demo-access` e `/reset-password` são públicas. O mock valida valores no navegador, acessíveis no bundle. `/verify-code` valida apenas o formato na prévia e não confirma códigos recebidos. Não usar essa implementação como autenticação real nem cadastrar usuários reais.
 
 O contrato `AuthService` é propositalmente pequeno. A API real de recuperação/redefinição precisará acrescentar token, expiração e tratamento de sessão; não conectar o método demonstrativo de redefinição diretamente a uma conta real.
 

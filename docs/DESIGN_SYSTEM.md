@@ -1,4 +1,4 @@
-# Fonseca Foundations v0.1
+# BLUEPRINT Foundations v0.2
 
 ## Escolha
 
@@ -6,7 +6,7 @@ Design system próprio, pequeno e baseado em tokens CSS, componentes React tipad
 
 Um design system é um conjunto consistente de decisões e contratos de componentes, não necessariamente uma dependência. Quando existirem componentes complexos (combobox, menu, dialog), avaliar uma primitiva acessível dedicada antes de reimplementar seu comportamento de teclado. Não antecipar essas dependências agora.
 
-Referência dos prints: fundo lavanda, cartão branco, formulário à esquerda, mensagem editorial à direita, tipografia de peso alto e destaque amarelo. A marca da Fonseca aqui é provisória, sujeita à aprovação; não é uma proposta de identidade final.
+Referência visual: experiência de login compacta e centralizada, fundo lavanda suave e cartão branco com controles simples. A interface BLUEPRINT acrescenta apenas um pequeno indicativo de aprendizagem de inglês e não replica a marca ou os recursos visuais do Twee.
 
 ## Paleta
 

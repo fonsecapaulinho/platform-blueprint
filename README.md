@@ -1,6 +1,6 @@
-# Fonseca Learning · primeira entrega
+# BLUEPRINT · autenticação e telas de acesso
 
-Base Next.js para revisar o layout de acesso da plataforma. Interface em português, inspirada na composição dos prints do Twee, com identidade visual própria e provisória da Fonseca. Não usa imagens, marca ou código do Twee.
+Base Next.js para revisar o layout de acesso da plataforma BLUEPRINT. A interface segue uma composição compacta e centralizada para autenticação, com inspiração geral em produtos de aprendizagem de idiomas. Não usa imagens, marca ou código do Twee.
 
 ## Executar
 
@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Abra http://localhost:3000. A raiz redireciona para `/login`.
+Abra http://localhost:3000. A raiz redireciona para `/sign-in`.
 
 ```sh
 npm run typecheck
@@ -23,15 +23,16 @@ Não é preciso configurar variáveis de ambiente. O ZIP contém código e lockf
 
 ## O que está pronto
 
-- `/login`: acesso separado para aluno ou professor, com campos de e-mail e senha, validação e feedback.
-- `/recuperar-conta`: solicitação e confirmação; o envio de código será integrado posteriormente.
-- `/redefinir-senha`: prévia com campo para código e nova senha; não valida o código nem altera uma conta.
-- `/acesso-demo`: final ilustrativo do login. É uma página pública, não um dashboard protegido.
+- `/sign-in`: acesso separado para aluno ou professor, com campos de e-mail e senha, validação e feedback.
+- `/forgot-password`: solicitação do código de recuperação por e-mail.
+- `/verify-code`: tela separada para informar o código de recuperação.
+- `/reset-password`: tela para criar e confirmar uma nova senha, após a etapa de código.
+- `/demo-access`: final ilustrativo do login. É uma página pública, não um dashboard protegido.
 - Página 404, alternância entre PT-BR e EN-US, componentes reutilizáveis e tokens do design system.
 
 O foco é layout e componentes. Google OAuth, cadastro, banco, API, dashboard, persistência e testes automatizados não foram adicionados. O mock de autenticação é interno e não exibe credenciais de acesso na interface.
 
-Os formulários não enviam dados pela rede nem os salvam em cookies ou local/sessionStorage. A recuperação não envia e-mail; o código é validado apenas quanto ao formato na tela de prévia. O mock não representa segurança, sessão ou autorização.
+Os formulários não enviam dados pela rede nem os salvam em cookies ou local/sessionStorage. A recuperação e a verificação do código são apenas prévias: não há envio de e-mail nem validação real do código. A redefinição também não altera a senha. O mock não representa segurança, sessão ou autorização.
 
 ## Estrutura
 

@@ -22,7 +22,7 @@ export function RecoveryForm() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string>();
   const [failure, setFailure] = useState("");
-  useEffect(() => { document.title = `${messages.documentTitle} | Fonseca`; }, [messages.documentTitle]);
+  useEffect(() => { document.title = `${messages.documentTitle} | BLUEPRINT`; }, [messages.documentTitle]);
   useEffect(() => { if (sent) heading.current?.focus(); }, [sent]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -45,7 +45,7 @@ export function RecoveryForm() {
         <FormHeader title={messages.sentTitle} description={messages.sentDescription}/>
       </div>
       <Feedback>{messages.previewNotice}</Feedback>
-      <Link className={styles.linkButton} href="/redefinir-senha">{messages.preview} <Icon name="arrow"/></Link>
+      <Link className={styles.linkButton} href="/verify-code">{messages.preview} <Icon name="arrow"/></Link>
       <Button variant="secondary" onClick={() => { setSent(false); setError(undefined); }}>{messages.useAnotherEmail}</Button>
     </div> : <>
       <FormHeader title={messages.title} description={messages.description}/>
@@ -56,6 +56,6 @@ export function RecoveryForm() {
         <span role="status" className={styles.statusText}>{pending ? messages.status : ""}</span>
       </form>
     </>}
-    <div className={styles.backRow}><Link className={styles.back} href="/login"><Icon name="back"/>{messages.back}</Link></div>
+    <div className={styles.backRow}><Link className={styles.back} href="/sign-in"><Icon name="back"/>{messages.back}</Link></div>
   </>;
 }

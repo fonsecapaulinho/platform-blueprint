@@ -14,5 +14,5 @@ export const mockAuthService: AuthService = {
     return { ok: email.trim().toLowerCase() === account.email && password === account.password };
   },
   async requestRecovery(_email) { await delay(); },
-  async resetPassword(_code, _password) { await delay(); },
+  async resetPassword(_password) { await delay(); },
 };

@@ -24,7 +24,7 @@ export function LoginForm() {
   const [pending, setPending] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [failure, setFailure] = useState("");
-  useEffect(() => { document.title = `${messages.documentTitle} | Fonseca`; }, [messages.documentTitle]);
+  useEffect(() => { document.title = `${messages.documentTitle} | BLUEPRINT`; }, [messages.documentTitle]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,12 +47,13 @@ export function LoginForm() {
       const result = await mockAuthService.signIn({ email, password, role });
       if (!result.ok) { setFailure(messages.loginFailed); return; }
       form.reset();
-      router.push("/acesso-demo");
+      router.push("/demo-access");
     } catch { setFailure(messages.requestFailed); }
     finally { lock.current = false; setPending(false); }
   }
 
   return <>
+    <div className={styles.learningHint}><span aria-hidden="true">Aa</span>{messages.learningHint}</div>
     <FormHeader title={messages.title} description={messages.description}/>
     <form onSubmit={submit} className={styles.form} noValidate aria-label={messages.formLabel}>
       <div>
@@ -64,7 +65,7 @@ export function LoginForm() {
       </div>
       <TextField id="login-email" name="email" label={messages.email} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" spellCheck={false} maxLength={254} placeholder={messages.emailPlaceholder} required error={errors.email}/>
       <PasswordField id="login-password" name="password" label={messages.password} autoComplete="current-password" placeholder={messages.passwordPlaceholder} maxLength={128} required error={errors.password}/>
-      <div className={styles.forgot}><Link href="/recuperar-conta">{messages.forgotPassword}</Link></div>
+      <div className={styles.forgot}><Link href="/forgot-password">{messages.forgotPassword}</Link></div>
       {failure && <Feedback tone="error">{failure}</Feedback>}
       <Button type="submit" pending={pending}>{pending ? messages.pending : messages.submit}{!pending && <Icon name="arrow"/>}</Button>
       <span role="status" className={styles.statusText}>{pending ? messages.status : ""}</span>
