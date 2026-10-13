@@ -22,6 +22,6 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
 }
 
 export function AuthCard({ children }: { children: React.ReactNode }) { return <section className={styles.card}>{children}</section>; }
-export function FormHeader({ title, description }: { title: string; description: string }) {
-  return <div className={styles.formHeader}><h1>{title}</h1><p>{description}</p></div>;
+export function FormHeader({ title, description }: { title: string; description?: string }) {
+  return <div className={styles.formHeader}><h1>{title}</h1>{description && <p>{description}</p>}</div>;
 }

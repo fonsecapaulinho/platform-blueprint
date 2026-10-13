@@ -17,7 +17,7 @@
 
 `/demo-access` é uma página pública do mock. O mock de e-mail/senha valida valores no navegador, acessíveis no bundle. `/verify-code` valida apenas o formato na prévia e não confirma códigos recebidos. `/reset-password` não altera senhas.
 
-O login Google usa Auth.js, OpenID Connect e sessão JWT em cookie. Configure `AUTH_SECRET`, `AUTH_GOOGLE_ID` e `AUTH_GOOGLE_SECRET` fora do repositório. O callback `/dashboard` exige sessão. Não há banco/adapter: identidade e perfil do usuário não são persistidos e os papéis aluno/professor ainda não são autorizados pelo servidor. Cadastro por e-mail, recuperação por e-mail e códigos de uso único aguardam backend.
+O login Google usa Auth.js, OpenID Connect e sessão JWT em cookie. Configure `AUTH_SECRET`, `AUTH_GOOGLE_ID` e `AUTH_GOOGLE_SECRET` fora do repositório. O callback `/dashboard` exige sessão. Não há banco/adapter: identidade e perfil do usuário não são persistidos e os papéis aluno/professor ainda não são autorizados pelo servidor. O papel escolhido durante cadastro é apenas seleção de interface, não uma permissão. Cadastro por e-mail, recuperação por e-mail e códigos de uso único aguardam backend.
 
 O contrato `AuthService` é propositalmente pequeno. A API real de recuperação/redefinição precisará acrescentar token, expiração e tratamento de sessão; não conectar o método demonstrativo de redefinição diretamente a uma conta real.
 

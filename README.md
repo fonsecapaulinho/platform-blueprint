@@ -24,7 +24,7 @@ Para login Google, configure as variáveis descritas em “Configurar Google OAu
 ## O que está pronto
 
 - `/sign-in`: acesso separado para aluno ou professor, com campos de e-mail e senha, validação e feedback.
-- `/sign-up`: tela de cadastro por e-mail (somente visual nesta etapa) ou cadastro/autenticação Google.
+- `/sign-up`: escolha entre aluno e professor antes do cadastro Google; a escolha segue o redirecionamento. Cadastro por e-mail permanece apenas visual.
 - `/forgot-password`: solicitação do código de recuperação por e-mail.
 - `/verify-code`: tela separada para informar o código de recuperação.
 - `/reset-password`: tela para criar e confirmar uma nova senha, após a etapa de código.
@@ -32,7 +32,7 @@ Para login Google, configure as variáveis descritas em “Configurar Google OAu
 - `/dashboard`: área de destino protegida pela sessão Google.
 - Página 404, alternância entre PT-BR e EN-US, componentes reutilizáveis e tokens do design system.
 
-O login/cadastro Google usa Auth.js e sessão JWT assinada em cookie. O acesso Google precisa de um projeto OAuth do Google configurado no ambiente da aplicação; consulte “Configurar Google OAuth” abaixo. Cadastro por e-mail, banco de dados e persistência de perfis ainda não estão conectados. O mock de e-mail/senha é interno e não exibe credenciais de acesso na interface.
+O login/cadastro Google usa Auth.js e sessão JWT assinada em cookie. O acesso Google precisa de um projeto OAuth do Google configurado no ambiente da aplicação; consulte “Configurar Google OAuth” abaixo. Cadastro por e-mail, banco de dados e persistência de perfis ainda não estão conectados. O perfil escolhido na tela de cadastro acompanha o redirecionamento, mas ainda não representa autorização nem é salvo em banco. O mock de e-mail/senha é interno e não exibe credenciais de acesso na interface.
 
 O OAuth envia o usuário ao Google e cria uma sessão de aplicação após o callback. Os formulários de e-mail/senha e cadastro não estão conectados a um backend. A recuperação e a verificação do código são apenas prévias: não há envio de e-mail nem validação real do código. A redefinição também não altera a senha.
 

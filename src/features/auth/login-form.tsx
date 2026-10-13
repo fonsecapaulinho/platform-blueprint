@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { GoogleIcon } from "@/components/brand/google-icon";
 import { TextField } from "@/components/ui/text-field";
 import { PasswordField } from "@/components/ui/password-field";
 import { Feedback } from "@/components/ui/feedback";
@@ -54,13 +55,12 @@ export function LoginForm({ googleError }: { googleError?: "not-configured" | "f
   }
 
   return <>
-    <div className={styles.learningHint}><span aria-hidden="true">Aa</span>{messages.learningHint}</div>
     <FormHeader title={messages.title} description={messages.description}/>
     {googleError && <Feedback tone="error">{googleError === "not-configured" ? messages.googleNotConfigured : messages.googleFailed}</Feedback>}
     <form action={signInWithGoogle} className={styles.oauthForm}>
       <input type="hidden" name="flow" value="sign-in"/>
       <Button type="submit" variant="secondary" className={styles.googleButton}>
-        <span className={styles.googleMark} aria-hidden="true">G</span>{messages.google}
+        <GoogleIcon/>{messages.google}
       </Button>
     </form>
     <div className={styles.divider}><span>{messages.divider}</span></div>

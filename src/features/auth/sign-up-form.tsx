@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { GoogleIcon } from "@/components/brand/google-icon";
 import { TextField } from "@/components/ui/text-field";
 import { PasswordField } from "@/components/ui/password-field";
 import { Feedback } from "@/components/ui/feedback";
@@ -16,6 +17,7 @@ import styles from "@/components/auth/auth.module.css";
 export function SignUpForm({ googleError }: { googleError?: "not-configured" | "failed" }) {
   const { locale } = useLocale();
   const messages = signUpMessages[locale];
+  const [role, setRole] = useState<"student" | "teacher">("student");
   const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const [notice, setNotice] = useState("");
 
@@ -42,22 +44,29 @@ export function SignUpForm({ googleError }: { googleError?: "not-configured" | "
       return;
     }
 
-    setNotice(messages.emailNotConnected);
-    form.reset();
+    setNotice(messages.emailSignupPreview);
   }
 
   return <>
-    <FormHeader title={messages.title} description={messages.description}/>
+    <FormHeader title={messages.title}/>
     {googleError && <Feedback tone="error">{googleError === "not-configured" ? messages.googleNotConfigured : messages.googleFailed}</Feedback>}
     <form action={signInWithGoogle} className={styles.oauthForm}>
       <input type="hidden" name="flow" value="sign-up"/>
+      <input type="hidden" name="role" value={role}/>
       <Button type="submit" variant="secondary" className={styles.googleButton}>
-        <span className={styles.googleMark} aria-hidden="true">G</span>{messages.google}
+        <GoogleIcon/>{messages.google}
       </Button>
     </form>
     <div className={styles.divider}><span>{messages.divider}</span></div>
-    <p className={styles.recoveryPrompt}>{messages.emailSignupNotice}</p>
     <form className={styles.form} onSubmit={submit} noValidate aria-label={messages.title}>
+      <input type="hidden" name="role" value={role}/>
+      <fieldset className={styles.signupRole}>
+        <legend className={styles.roleLabel}>{messages.roleLabel}</legend>
+        <div className={styles.rolePicker}>
+          <button type="button" onClick={() => setRole("student")} aria-pressed={role === "student"}>{messages.student}</button>
+          <button type="button" onClick={() => setRole("teacher")} aria-pressed={role === "teacher"}>{messages.teacher}</button>
+        </div>
+      </fieldset>
       <TextField id="signup-name" name="name" label={messages.name} autoComplete="name" maxLength={120} placeholder={messages.namePlaceholder} required error={errors.name}/>
       <TextField id="signup-email" name="email" label={messages.email} type="email" autoComplete="email" inputMode="email" autoCapitalize="none" spellCheck={false} maxLength={254} placeholder={messages.emailPlaceholder} required error={errors.email}/>
       <PasswordField id="signup-password" name="password" label={messages.password} autoComplete="new-password" minLength={8} maxLength={128} required hint={messages.passwordHint} error={errors.password}/>

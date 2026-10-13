@@ -22,3 +22,9 @@
 .info { background: var(--color-surface-soft); color: var(--color-muted); }
 .feedback.error { background: var(--color-danger-soft); border-color: var(--color-danger); color: var(--color-danger); }
 .success { background: var(--color-success-soft); border-color: var(--color-success); color: var(--color-success); }
+@media (max-height: 620px) {
+  .field { gap: 4px; }
+  .input { min-height: 36px; padding: 6px 10px; font-size: .9375rem; }
+  .reveal { top: 0; height: 34px; }
+  .hint, .error { font-size: .75rem; line-height: 1.2; }
+}

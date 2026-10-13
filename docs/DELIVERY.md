@@ -22,6 +22,9 @@ As verificações de build/tipos não são testes automatizados. Nenhuma credenc
 - Login revisado em viewport mobile 320 × 568, sem rolagem.
 - Campos mantêm foco visível cinza neutro; a borda/foco roxo foi removida.
 - Cadastro por e-mail valida os campos no cliente e informa claramente que não cria conta sem backend.
+- A tela de cadastro permite selecionar aluno/professor; a escolha acompanha o início de cadastro Google.
+- O ícone oficial multicolorido do Google aparece nos botões de login e cadastro.
+- Textos auxiliares removidos a pedido, e login/cadastro verificados sem rolagem em 320 × 568.
 - Botões Google exibem instrução localizada quando as variáveis OAuth não estão configuradas.
 - Cadastro com Google usa o mesmo provider OAuth, com retorno à área `/dashboard`.
 

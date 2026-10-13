@@ -6,7 +6,7 @@ import { signOutUser } from "@/app/(auth)/actions";
 import { dashboardMessages } from "./dashboard-view.translations";
 import styles from "@/components/auth/auth.module.css";
 
-export function DashboardView({ name, email }: { name: string; email: string }) {
+export function DashboardView({ name, email, role }: { name: string; email: string; role?: "student" | "teacher" }) {
   const { locale } = useLocale();
   const messages = dashboardMessages[locale];
 
@@ -14,6 +14,7 @@ export function DashboardView({ name, email }: { name: string; email: string }) 
     <FormHeader title={messages.title} description={messages.description}/>
     <p className={styles.userIdentity}>{name || email}</p>
     {name && <p className={styles.userEmail}>{email}</p>}
+    {role && <p className={styles.userRole}>{role === "teacher" ? messages.teacher : messages.student}</p>}
     <form action={signOutUser} className={styles.form}>
       <button className={styles.signOutButton} type="submit">{messages.signOut}</button>
     </form>
