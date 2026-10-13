@@ -6,7 +6,7 @@ Design system próprio, pequeno e baseado em tokens CSS, componentes React tipad
 
 Um design system é um conjunto consistente de decisões e contratos de componentes, não necessariamente uma dependência. Quando existirem componentes complexos (combobox, menu, dialog), avaliar uma primitiva acessível dedicada antes de reimplementar seu comportamento de teclado. Não antecipar essas dependências agora.
 
-Referência visual: experiência de login compacta e centralizada, fundo lavanda suave e cartão branco com controles simples. A interface BLUEPRINT acrescenta apenas um pequeno indicativo de aprendizagem de inglês e não replica a marca ou os recursos visuais do Twee.
+Visual reference: a compact, centered sign-in experience with a soft lavender background, white card, and simple controls. BLUEPRINT adds a subtle English-learning cue without reproducing Twee's branding or visual assets.
 
 ## Paleta
 
@@ -15,9 +15,9 @@ Referência visual: experiência de login compacta e centralizada, fundo lavanda
 | `--color-canvas` | `#F3F0FF` | Fundo lavanda |
 | `--color-surface` | `#FFFFFF` | Cartões e campos |
 | `--color-surface-soft` | `#F8F7FC` | Superfícies secundárias |
-| `--color-primary` | `#6541CF` | Ações e links |
-| `--color-primary-hover` | `#5030AD` | Hover das ações |
-| `--color-primary-soft` | `#ECE5FF` | Fundo de ícones |
+| `--color-primary` | `#15803D` | Ações e links |
+| `--color-primary-hover` | `#166534` | Hover das ações |
+| `--color-primary-soft` | `#DCFCE7` | Fundo de ícones |
 | `--color-ink` | `#252333` | Texto principal |
 | `--color-muted` | `#646174` | Texto secundário |
 | `--color-border` | `#DCD8E8` | Divisórias decorativas |
@@ -26,7 +26,7 @@ Referência visual: experiência de login compacta e centralizada, fundo lavanda
 | `--color-danger` | `#A42C3C` | Erro com mensagem textual |
 | `--color-success` | `#21644C` | Confirmação com mensagem textual |
 
-O violeta principal é mais escuro que o exemplo para apoiar a leitura de textos e botões. Nunca usar cor como único indicador de estado. Divisórias claras não substituem bordas identificáveis dos controles.
+The green primary color is used for buttons, links, and focus borders. Never use color as the only state indicator. Light dividers do not replace identifiable control borders.
 
 ## Tipografia
 

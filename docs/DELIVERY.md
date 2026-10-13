@@ -2,7 +2,7 @@
 
 ## Escopo
 
-Aplicação BLUEPRINT com Next.js App Router, TypeScript estrito, CSS Modules e traduções PT-BR/EN-US. Inclui login e início de cadastro Google com Auth.js, sessão JWT e destino `/dashboard` protegido. O cadastro por e-mail em `/sign-up` e `/complete-sign-up` é uma prévia visual; banco de dados, consulta de conta, envio/validação de código e criação de usuário não estão conectados.
+BLUEPRINT app using Next.js App Router, strict TypeScript, CSS Modules, and an English (US)-only interface. Includes Google login and sign-up through Auth.js, JWT sessions, and a protected `/dashboard` destination. Email sign-up at `/sign-up` and `/complete-sign-up` is a visual preview; the database, account lookup, code delivery/verification, and user creation are not connected.
 
 Fluxos de recuperação em `/forgot-password`, `/verify-code` e `/reset-password` permanecem prévias, sem envio ou validação de código.
 
@@ -20,13 +20,13 @@ As verificações de build/tipos não são testes automatizados. Nenhuma credenc
 ## Revisão visual e funcional
 
 - Login revisado em viewport mobile 320 × 568, sem rolagem.
-- Campos mantêm foco visível cinza neutro; a borda/foco roxo foi removida.
+- Focused fields highlight their green border without an additional ring.
 - Cadastro por e-mail permite seguir da identidade à etapa de código e ao formulário final em `/complete-sign-up`, com nome/e-mail preenchidos; os dados de prévia ficam no `sessionStorage` da aba. Não há link de e-mail ativo e a interface avisa que não envia/valida códigos nem cria conta.
-- Data de nascimento usa a apresentação localizada do controle nativo (`en-US` ou `pt-BR`); país de origem é uma lista de países localizada. Campos focados destacam a borda em roxo, sem anel adicional.
+- Date of birth uses the native control's US English presentation; country of origin is a localized country list.
 - A tela de cadastro permite selecionar aluno/professor; a escolha acompanha o início de cadastro Google.
 - O ícone oficial multicolorido do Google aparece nos botões de login e cadastro.
-- Textos auxiliares removidos a pedido; login verificado sem rolagem em 320 × 568. O cadastro detalhado é dividido em etapas.
-- Botões Google exibem instrução localizada quando as variáveis OAuth não estão configuradas.
+- Auxiliary copy removed as requested; sign-in verified without scrolling at 320 × 568. Detailed sign-up is split into steps.
+- Google buttons display an English setup message when OAuth variables are missing.
 - Cadastro com Google usa o mesmo provider OAuth, com retorno à área `/dashboard`.
 
 Não é uma execução de suíte automatizada, medição Lighthouse, auditoria completa de acessibilidade ou teste em dispositivo físico.

@@ -1,28 +1,6 @@
 import type { Locale } from "@/components/auth/locale";
 
 export const resetPasswordMessages = {
-  "pt-BR": {
-    documentTitle: "Nova senha",
-    title: "Redefinir senha",
-    description: "Escolha uma nova senha para sua conta.",
-    formLabel: "Redefinir senha",
-    password: "Nova senha",
-    passwordHint: "Use de 8 a 128 caracteres.",
-    confirmation: "Confirmar nova senha",
-    confirmationRequired: "Confirme a nova senha.",
-    passwordMismatch: "As senhas precisam ser iguais.",
-    passwordTooShort: "Use pelo menos 8 caracteres.",
-    passwordTooLong: "Use no máximo 128 caracteres.",
-    submit: "Redefinir senha",
-    pending: "Salvando…",
-    status: "Processando solicitação.",
-    requestFailed: "Não foi possível continuar. Tente novamente.",
-    doneTitle: "Solicitação concluída",
-    doneDescription: "Esta prévia não altera sua senha.",
-    doneNotice: "Nenhuma senha foi alterada.",
-    back: "Voltar para o login",
-    successLink: "Voltar para o login",
-  },
   "en-US": {
     documentTitle: "New password",
     title: "Reset password",

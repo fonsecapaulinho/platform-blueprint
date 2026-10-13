@@ -1,19 +1,6 @@
 import type { Locale } from "@/components/auth/locale";
 
 export const verifyCodeMessages = {
-  "pt-BR": {
-    documentTitle: "Código de recuperação",
-    title: "Verifique seu e-mail",
-    description: "Digite o código de recuperação de seis dígitos.",
-    formLabel: "Verificar código de recuperação",
-    code: "Código de recuperação",
-    codeHint: "A entrega e a validação do código serão conectadas em breve.",
-    codeRequired: "Informe um código válido de 6 dígitos.",
-    submit: "Continuar",
-    back: "Voltar",
-    requestAnother: "Precisa de outro código?",
-    requestLink: "Solicitar novamente",
-  },
   "en-US": {
     documentTitle: "Recovery code",
     title: "Check your email",

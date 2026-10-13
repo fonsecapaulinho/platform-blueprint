@@ -31,7 +31,7 @@ Para login Google, configure as variáveis descritas em “Configurar Google OAu
 - `/reset-password`: tela para criar e confirmar uma nova senha, após a etapa de código.
 - `/demo-access`: final ilustrativo do login mock.
 - `/dashboard`: área de destino protegida pela sessão Google.
-- Página 404, alternância entre PT-BR e EN-US, componentes reutilizáveis e tokens do design system.
+- English (US) interface, 404 page, reusable components, and design-system tokens.
 
 O login/cadastro Google usa Auth.js e sessão JWT assinada em cookie. O acesso Google precisa de um projeto OAuth do Google configurado no ambiente da aplicação; consulte “Configurar Google OAuth” abaixo. Cadastro por e-mail, banco de dados e persistência de perfis ainda não estão conectados. O rascunho de nome/e-mail/perfil da prévia é mantido apenas em `sessionStorage` da aba para preencher a etapa final; não armazena senha ou código. O perfil escolhido na tela de cadastro ainda não representa autorização nem é salvo em banco. O mock de e-mail/senha é interno e não exibe credenciais de acesso na interface.
 
@@ -53,7 +53,7 @@ src/
   app/                    Rotas, metadados, layout raiz e página 404
     (auth)/               Layout compartilhado de acesso
   components/
-    auth/                 AuthShell, seletor de idioma e contexto PT-BR/EN-US
+    auth/                 AuthShell and fixed English (US) locale
     brand/                Marca tipográfica provisória
     ui/                   Button, TextField, PasswordField, Feedback e Icon
   features/auth/          Formulários, validação, mock e traduções junto aos formulários
@@ -68,7 +68,7 @@ docs/
 
 Runtime: **Next.js 16.4.0, React 19.3.0, React DOM 19.3.0 e Auth.js 5.0.0-beta.32**. Desenvolvimento: TypeScript 5.9.3 e tipos de Node/React. As versões estão fixadas no manifesto e no lockfile.
 
-Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. Auth.js atende ao OAuth Google com uma dependência. CSS Modules e HTML nativo atendem a interface. Cada componente mantém seus textos PT-BR/EN-US em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
+Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formulários, gerenciador global de estado, analytics ou cliente HTTP adicional. Auth.js atende ao OAuth Google com uma dependência. CSS Modules e HTML nativo atendem a interface. Cada componente mantém seus textos em inglês (EUA) em um arquivo `.translations.ts` co-localizado para facilitar manutenção.
 
 ## Próximos passos
 
@@ -77,4 +77,4 @@ Sem Tailwind, biblioteca de componentes, ícones externos, biblioteca de formul�
 3. Persistir usuários, perfis e papéis (aluno/professor) em um banco de dados.
 4. Integrar cadastro por e-mail e envio/validação do código de recuperação com expiração e uso único.
 
-As páginas continuam pré-renderizadas pelo Next.js. O seletor de idioma, os formulários e os controles de senha usam interatividade no cliente, sem transformar o conteúdo inteiro em Client Component.
+As páginas continuam pré-renderizadas pelo Next.js. Os formulários e controles de senha usam interatividade no cliente, sem transformar o conteúdo inteiro em Client Component.

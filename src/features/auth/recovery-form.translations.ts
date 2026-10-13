@@ -1,26 +1,6 @@
 import type { Locale } from "@/components/auth/locale";
 
 export const recoveryMessages = {
-  "pt-BR": {
-    documentTitle: "Recuperar conta",
-    title: "Recuperar conta",
-    description: "Informe o e-mail da sua conta.",
-    formLabel: "Recuperar conta",
-    email: "E-mail",
-    emailPlaceholder: "voce@exemplo.com",
-    submit: "Continuar",
-    pending: "Enviando…",
-    status: "Processando solicitação.",
-    emailRequired: "Informe seu e-mail.",
-    invalidEmail: "Informe um e-mail válido.",
-    requestFailed: "Não foi possível continuar. Tente novamente.",
-    previewNotice: "Prévia: o envio do código será integrado em breve.",
-    sentTitle: "Solicitação recebida",
-    sentDescription: "O envio do código de recuperação será habilitado em breve. Quando estiver disponível, ele será enviado para o e-mail informado.",
-    preview: "Informar código de recuperação",
-    useAnotherEmail: "Usar outro e-mail",
-    back: "Voltar para o login",
-  },
   "en-US": {
     documentTitle: "Recover account",
     title: "Recover your account",
