@@ -22,6 +22,7 @@ As verificações de build/tipos não são testes automatizados. Nenhuma credenc
 - Login revisado em viewport mobile 320 × 568, sem rolagem.
 - Campos mantêm foco visível cinza neutro; a borda/foco roxo foi removida.
 - Cadastro por e-mail permite seguir da identidade à etapa de código e ao formulário final em `/complete-sign-up`, com nome/e-mail preenchidos; os dados de prévia ficam no `sessionStorage` da aba. Não há link de e-mail ativo e a interface avisa que não envia/valida códigos nem cria conta.
+- Data de nascimento usa a apresentação localizada do controle nativo (`en-US` ou `pt-BR`); país de origem é uma lista de países localizada. Campos focados destacam a borda em roxo, sem anel adicional.
 - A tela de cadastro permite selecionar aluno/professor; a escolha acompanha o início de cadastro Google.
 - O ícone oficial multicolorido do Google aparece nos botões de login e cadastro.
 - Textos auxiliares removidos a pedido; login verificado sem rolagem em 320 × 568. O cadastro detalhado é dividido em etapas.

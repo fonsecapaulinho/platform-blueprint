@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/components/brand/google-icon";
 import { TextField } from "@/components/ui/text-field";
+import { SelectField, type SelectOption } from "@/components/ui/select-field";
 import { PasswordField } from "@/components/ui/password-field";
 import { Feedback } from "@/components/ui/feedback";
 import { FormHeader } from "@/components/auth/auth-shell";
 import { useLocale } from "@/components/auth/locale-provider";
 import { signInWithGoogle } from "@/app/(auth)/actions";
 import { signUpMessages } from "./sign-up-form.translations";
+import { getCountryOptions } from "./country-options";
 import { emailError, newPasswordError } from "./validation";
 import styles from "@/components/auth/auth.module.css";
 
@@ -49,6 +51,7 @@ export function SignUpForm({
   const [code, setCode] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [country, setCountry] = useState("");
+  const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<SignUpErrors>({});
@@ -61,7 +64,10 @@ export function SignUpForm({
     : step === "code" ? messages.codeTitle : messages.accountTitle;
   const documentTitle = initialDraft ? messages.accountTitle : messages.documentTitle;
 
-  useEffect(() => { document.title = `${documentTitle} | BLUEPRINT`; }, [documentTitle]);
+  useEffect(() => {
+    document.title = `${documentTitle} | BLUEPRINT`;
+    setCountryOptions(getCountryOptions(locale));
+  }, [documentTitle, locale]);
 
   function continueFromIdentity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -236,6 +242,7 @@ export function SignUpForm({
           name="birthDate"
           label={messages.birthDate}
           type="date"
+          lang={locale}
           autoComplete="bday"
           max={maxBirthDate}
           required
@@ -243,13 +250,13 @@ export function SignUpForm({
           onChange={(event) => setBirthDate(event.target.value)}
           error={errors.birthDate}
         />
-        <TextField
+        <SelectField
           id="signup-country"
           name="country"
           label={messages.country}
-          autoComplete="country-name"
-          maxLength={80}
+          autoComplete="country"
           placeholder={messages.countryPlaceholder}
+          options={countryOptions}
           required
           value={country}
           onChange={(event) => setCountry(event.target.value)}
