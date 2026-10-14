@@ -17,12 +17,41 @@ import { emailError } from "./validation";
 import styles from "@/shared/layout/auth.module.css";
 import { signInWithGoogle } from "@/features/auth/actions";
 
-export function LoginForm({ googleError }: { googleError?: "not-configured" | "failed" }) {
+type LoginProps = { googleError?: "not-configured" | "failed" };
+type LoginRole = "student" | "teacher";
+
+export function LoginForm({ googleError }: LoginProps) {
+  const [role, setRole] = useState<LoginRole>("student");
+  const container = useRef<HTMLDivElement>(null);
+
+  function switchRole(nextRole: LoginRole) {
+    if (role === nextRole) return;
+    setRole(nextRole);
+  }
+
+  useEffect(() => {
+    if (container.current?.contains(document.activeElement)) {
+      container.current.querySelector<HTMLButtonElement>(`[data-role="${role}"] button[aria-pressed="true"]`)?.focus({ preventScroll: true });
+    }
+  }, [role]);
+
+  return <div ref={container} className={styles.loginScene}>
+    <div className={styles.loginFlipper} data-flipped={role === "teacher"}>
+      {(["student", "teacher"] as const).map(face => <section key={face}
+        data-role={face} className={`${styles.card} ${styles.loginFace}`}
+        inert={role !== face} aria-hidden={role !== face}>
+        <LoginFace role={face} onRoleChange={switchRole} googleError={googleError}/>
+      </section>)}
+    </div>
+  </div>;
+}
+
+function LoginFace({ googleError, role, onRoleChange }: LoginProps & { role: LoginRole; onRoleChange: (role: LoginRole) => void }) {
   const router = useRouter();
   const { locale } = useLocale();
   const messages = loginMessages[locale];
   const lock = useRef(false);
-  const [role, setRole] = useState<"student" | "teacher">("student");
+
   const [pending, setPending] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [failure, setFailure] = useState("");
@@ -64,16 +93,16 @@ export function LoginForm({ googleError }: { googleError?: "not-configured" | "f
       </Button>
     </form>
     <div className={styles.divider}><span>{messages.divider}</span></div>
-    <form onSubmit={submit} className={styles.form} noValidate aria-label={messages.formLabel}>
+    <form onSubmit={submit} className={styles.form} noValidate aria-label={`${messages.formLabel} — ${messages[role]}`}>
       <div>
-        <span className={styles.roleLabel} id="login-role-label">{messages.roleLabel}</span>
-        <div className={styles.rolePicker} role="group" aria-labelledby="login-role-label">
-          <button type="button" onClick={() => { setRole("student"); setFailure(""); setErrors({}); }} aria-pressed={role === "student"}>{messages.student}</button>
-          <button type="button" onClick={() => { setRole("teacher"); setFailure(""); setErrors({}); }} aria-pressed={role === "teacher"}>{messages.teacher}</button>
+        <span className={styles.roleLabel} id={`${role}-role-label`}>{messages.roleLabel}</span>
+        <div className={styles.rolePicker} role="group" aria-labelledby={`${role}-role-label`}>
+          <button type="button" onClick={() => { onRoleChange("student"); setFailure(""); setErrors({}); }} aria-pressed={role === "student"}>{messages.student}</button>
+          <button type="button" onClick={() => { onRoleChange("teacher"); setFailure(""); setErrors({}); }} aria-pressed={role === "teacher"}>{messages.teacher}</button>
         </div>
       </div>
-      <TextField id="login-email" name="email" label={messages.email} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" spellCheck={false} maxLength={254} placeholder={messages.emailPlaceholder} required error={errors.email}/>
-      <PasswordField id="login-password" name="password" label={messages.password} autoComplete="current-password" placeholder={messages.passwordPlaceholder} maxLength={128} required error={errors.password}/>
+      <TextField id={`${role}-email`} name="email" label={messages.email} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" spellCheck={false} maxLength={254} placeholder={messages.emailPlaceholder} required error={errors.email}/>
+      <PasswordField id={`${role}-password`} name="password" label={messages.password} autoComplete="current-password" placeholder={messages.passwordPlaceholder} maxLength={128} required error={errors.password}/>
       <div className={styles.forgot}><Link href="/forgot-password">{messages.forgotPassword}</Link></div>
       {failure && <Feedback tone="error">{failure}</Feedback>}
       <Button type="submit" pending={pending}>{pending ? messages.pending : messages.submit}{!pending && <Icon name="arrow"/>}</Button>

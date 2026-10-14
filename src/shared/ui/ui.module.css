@@ -9,7 +9,7 @@
 .inputWrap { position: relative; }
 .input { display: block; width: 100%; min-width: 0; min-height: 50px; padding: 12px 14px; border: 1px solid var(--color-input-border); border-radius: var(--radius-sm); color: var(--color-ink); background: white; font-size: 1rem; transition: border-color var(--duration-fast); }
 .input::placeholder { color: var(--color-muted); opacity: 1; }
-.input:focus, .input:focus-visible { border-color: var(--color-primary); outline: none; box-shadow: none; }
+.input:focus, .input:focus-visible { border-color: var(--color-primary); outline: 2px solid var(--color-primary); outline-offset: 2px; }
 .input[aria-invalid="true"] { border-color: var(--color-danger); }
 .select { appearance: auto; }
 .adorned { padding-right: 54px; }
@@ -22,9 +22,3 @@
 .info { background: var(--color-surface-soft); color: var(--color-muted); }
 .feedback.error { background: var(--color-danger-soft); border-color: var(--color-danger); color: var(--color-danger); }
 .success { background: var(--color-success-soft); border-color: var(--color-success); color: var(--color-success); }
-@media (max-height: 620px) {
-  .field { gap: 4px; }
-  .input { min-height: 36px; padding: 6px 10px; font-size: .9375rem; }
-  .reveal { top: 0; height: 34px; }
-  .hint, .error { font-size: .75rem; line-height: 1.2; }
-}
