@@ -46,4 +46,3 @@ fs.mkdirSync(screenshots,{recursive:true});
  await page.goto(`${base}/sign-in`);await page.screenshot({path:`${screenshots}/login-final.png`,fullPage:true});
  assert.deepEqual(errors,[]);console.log('PASS reduced motion, input focus, icons, signup and recovery password validation, no browser exceptions');await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
-
