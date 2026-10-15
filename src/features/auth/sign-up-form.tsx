@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/shared/ui/button";
 import { GoogleIcon } from "@/shared/brand/google-icon";
 import { TextField } from "@/shared/ui/text-field";
-import { SelectField, type SelectOption } from "@/shared/ui/select-field";
+import { SelectField } from "@/shared/ui/select-field";
 import { PasswordField } from "@/shared/ui/password-field";
 import { Feedback } from "@/shared/ui/feedback";
-import { FormHeader } from "@/shared/layout/auth-shell";
+import { AuthCard, FormHeader } from "@/shared/layout/auth-shell";
 import { useLocale } from "@/shared/layout/locale-provider";
 import { signInWithGoogle } from "@/features/auth/actions";
 import { signUpMessages } from "./sign-up-form.translations";
 import { getCountryOptions } from "./country-options";
-import { emailError, newPasswordError } from "./validation";
+import { emailError } from "./validation";
+import { evaluatePassword } from "./password-policy";
+import { passwordPolicyMessages } from "./password-policy.translations";
+import { PasswordRequirements } from "./password-requirements";
 import styles from "@/shared/layout/auth.module.css";
 
 type SignUpStep = "identity" | "code" | "account" | "done";
@@ -34,24 +37,30 @@ export const signupDraftKeys = {
   role: "blueprint.signup.role",
 };
 
-export function SignUpForm({
-  googleError,
-  initialDraft,
-}: {
-  googleError?: "not-configured" | "failed";
-  initialDraft?: SignUpDraft;
+type SignUpProps = { googleError?: "not-configured" | "failed"; initialDraft?: SignUpDraft; enableFlip?: boolean };
+
+export function SignUpForm({ googleError, initialDraft, enableFlip = false }: SignUpProps) {
+  const [role, setRole] = useState<SignUpDraft["role"]>(initialDraft?.role ?? "student");
+  if (initialDraft) return <SignUpFace initialDraft={initialDraft} role={role} onRoleChange={setRole}/>;
+  return <AuthCard enableFlip={enableFlip} flipped={role === "teacher"}
+    back={<SignUpFace role="teacher" onRoleChange={setRole} googleError={googleError}/>}>
+    <SignUpFace role="student" onRoleChange={setRole} googleError={googleError}/>
+  </AuthCard>;
+}
+
+function SignUpFace({ googleError, initialDraft, role, onRoleChange }: SignUpProps & {
+  role: SignUpDraft["role"]; onRoleChange: (role: SignUpDraft["role"]) => void;
 }) {
   const router = useRouter();
   const { locale } = useLocale();
   const messages = signUpMessages[locale];
-  const [role, setRole] = useState<"student" | "teacher">(initialDraft?.role ?? "student");
   const [step, setStep] = useState<SignUpStep>(initialDraft ? "account" : "identity");
   const [name, setName] = useState(initialDraft?.name ?? "");
   const [email, setEmail] = useState(initialDraft?.email ?? "");
   const [code, setCode] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [country, setCountry] = useState("");
-  const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
+  const countryOptions = useMemo(() => step === "account" ? getCountryOptions(locale) : [], [step, locale]);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<SignUpErrors>({});
@@ -66,7 +75,6 @@ export function SignUpForm({
 
   useEffect(() => {
     document.title = `${documentTitle} | BLUEPRINT`;
-    setCountryOptions(getCountryOptions(locale));
   }, [documentTitle, locale]);
 
   function continueFromIdentity(event: FormEvent<HTMLFormElement>) {
@@ -107,7 +115,7 @@ export function SignUpForm({
     router.push("/complete-sign-up");
   }
 
-  function finishPreview(event: FormEvent<HTMLFormElement>) {
+  function finishSignUp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const parsedBirthDate = birthDate ? new Date(`${birthDate}T00:00:00`) : undefined;
     const nextErrors = {
@@ -118,7 +126,7 @@ export function SignUpForm({
           ? messages.invalidBirthDate
           : undefined,
       country: country.trim() ? undefined : messages.countryRequired,
-      password: newPasswordError(password, { tooShort: messages.passwordTooShort, tooLong: messages.passwordTooLong }),
+      password: evaluatePassword(password, { name, email }).valid ? undefined : passwordPolicyMessages[locale].invalid,
       confirmPassword: confirmPassword === password ? undefined : messages.passwordMismatch,
     };
     setErrors(nextErrors);
@@ -156,12 +164,12 @@ export function SignUpForm({
         <fieldset className={styles.signupRole}>
           <legend className={styles.roleLabel}>{messages.roleLabel}</legend>
           <div className={styles.rolePicker}>
-            <button type="button" onClick={() => setRole("student")} aria-pressed={role === "student"}>{messages.student}</button>
-            <button type="button" onClick={() => setRole("teacher")} aria-pressed={role === "teacher"}>{messages.teacher}</button>
+            <button type="button" onClick={() => onRoleChange("student")} aria-pressed={role === "student"}>{messages.student}</button>
+            <button type="button" onClick={() => onRoleChange("teacher")} aria-pressed={role === "teacher"}>{messages.teacher}</button>
           </div>
         </fieldset>
         <TextField
-          id="signup-name"
+          id={`signup-name-${role}`}
           name="name"
           label={messages.name}
           autoComplete="name"
@@ -173,7 +181,7 @@ export function SignUpForm({
           error={errors.name}
         />
         <TextField
-          id="signup-email"
+          id={`signup-email-${role}`}
           name="email"
           label={messages.email}
           type="email"
@@ -192,11 +200,10 @@ export function SignUpForm({
       </form>
     </>}
     {step === "code" && <>
-      <Feedback>{messages.codeHint}</Feedback>
       <p className={styles.userEmail}>{messages.email}: {email}</p>
       <form className={styles.form} onSubmit={continueFromCode} noValidate aria-label={messages.codeTitle}>
         <TextField
-          id="signup-code"
+          id={`signup-code-${role}`}
           name="code"
           label={messages.code}
           inputMode="numeric"
@@ -214,11 +221,10 @@ export function SignUpForm({
       <button type="button" className={styles.stepBack} onClick={() => goBack("identity")}>{messages.back}</button>
     </>}
     {step === "account" && <>
-      <Feedback>{messages.accountPreview}</Feedback>
-      <form className={styles.form} onSubmit={finishPreview} noValidate aria-label={messages.accountTitle}>
+      <form className={styles.form} onSubmit={finishSignUp} noValidate aria-label={messages.accountTitle}>
         <input type="hidden" name="role" value={role}/>
         <TextField
-          id="signup-complete-name"
+          id={`signup-complete-name-${role}`}
           name="name"
           label={messages.name}
           autoComplete="name"
@@ -229,7 +235,7 @@ export function SignUpForm({
           error={errors.name}
         />
         <TextField
-          id="signup-complete-email"
+          id={`signup-complete-email-${role}`}
           name="email"
           label={messages.email}
           type="email"
@@ -238,7 +244,7 @@ export function SignUpForm({
           readOnly
         />
         <TextField
-          id="signup-birth-date"
+          id={`signup-birth-date-${role}`}
           name="birthDate"
           label={messages.birthDate}
           type="date"
@@ -251,7 +257,7 @@ export function SignUpForm({
           error={errors.birthDate}
         />
         <SelectField
-          id="signup-country"
+          id={`signup-country-${role}`}
           name="country"
           label={messages.country}
           autoComplete="country"
@@ -263,35 +269,37 @@ export function SignUpForm({
           error={errors.country}
         />
         <PasswordField
-          id="signup-password"
+          aria-describedby={`signup-password-rules-${role}`}
+          id={`signup-password-${role}`}
           name="password"
           label={messages.password}
           autoComplete="new-password"
-          minLength={8}
+          minLength={12}
           maxLength={128}
           required
-          hint={messages.passwordHint}
+
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => { setPassword(event.target.value); setErrors(current => ({ ...current, password: undefined })); }}
           error={errors.password}
         />
+        <PasswordRequirements id={`signup-password-rules-${role}`} password={password} identity={{ name, email }}/>
         <PasswordField
-          id="signup-confirm-password"
+          id={`signup-confirm-password-${role}`}
           name="confirmPassword"
           label={messages.confirmPassword}
           autoComplete="new-password"
-          minLength={8}
+          minLength={12}
           maxLength={128}
           required
           value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
+          onChange={(event) => { setConfirmPassword(event.target.value); setErrors(current => ({ ...current, confirmPassword: undefined })); }}
           error={errors.confirmPassword}
         />
         <Button type="submit">{messages.finish}</Button>
       </form>
       <button type="button" className={styles.stepBack} onClick={() => goBack("code")}>{messages.back}</button>
     </>}
-    {step === "done" && <Feedback>{messages.previewOnly}</Feedback>}
-    <p className={styles.signupPrompt}>{messages.alreadyHaveAccount} <Link href="/sign-in">{messages.signIn}</Link></p>
+    {step === "done" && <Feedback>{messages.complete}</Feedback>}
+    <p className={styles.signupPrompt}>{messages.alreadyHaveAccount} <Link prefetch={false} href="/sign-in">{messages.signIn}</Link></p>
   </>;
 }

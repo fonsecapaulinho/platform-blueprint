@@ -9,7 +9,7 @@ import { TextField } from "@/shared/ui/text-field";
 import { PasswordField } from "@/shared/ui/password-field";
 import { Feedback } from "@/shared/ui/feedback";
 import { Icon } from "@/shared/ui/icon";
-import { FormHeader } from "@/shared/layout/auth-shell";
+import { AuthCard, FormHeader } from "@/shared/layout/auth-shell";
 import { useLocale } from "@/shared/layout/locale-provider";
 import { mockAuthService } from "./mock-auth-service";
 import { loginMessages } from "./login-form.translations";
@@ -17,33 +17,15 @@ import { emailError } from "./validation";
 import styles from "@/shared/layout/auth.module.css";
 import { signInWithGoogle } from "@/features/auth/actions";
 
-type LoginProps = { googleError?: "not-configured" | "failed" };
+type LoginProps = { enableFlip?: boolean; googleError?: "not-configured" | "failed" };
 type LoginRole = "student" | "teacher";
 
-export function LoginForm({ googleError }: LoginProps) {
+export function LoginForm({ googleError, enableFlip = false }: LoginProps) {
   const [role, setRole] = useState<LoginRole>("student");
-  const container = useRef<HTMLDivElement>(null);
-
-  function switchRole(nextRole: LoginRole) {
-    if (role === nextRole) return;
-    setRole(nextRole);
-  }
-
-  useEffect(() => {
-    if (container.current?.contains(document.activeElement)) {
-      container.current.querySelector<HTMLButtonElement>(`[data-role="${role}"] button[aria-pressed="true"]`)?.focus({ preventScroll: true });
-    }
-  }, [role]);
-
-  return <div ref={container} className={styles.loginScene}>
-    <div className={styles.loginFlipper} data-flipped={role === "teacher"}>
-      {(["student", "teacher"] as const).map(face => <section key={face}
-        data-role={face} className={`${styles.card} ${styles.loginFace}`}
-        inert={role !== face} aria-hidden={role !== face}>
-        <LoginFace role={face} onRoleChange={switchRole} googleError={googleError}/>
-      </section>)}
-    </div>
-  </div>;
+  return <AuthCard enableFlip={enableFlip} flipped={role === "teacher"}
+    back={<LoginFace role="teacher" onRoleChange={setRole} googleError={googleError}/>}>
+    <LoginFace role="student" onRoleChange={setRole} googleError={googleError}/>
+  </AuthCard>;
 }
 
 function LoginFace({ googleError, role, onRoleChange }: LoginProps & { role: LoginRole; onRoleChange: (role: LoginRole) => void }) {
@@ -103,11 +85,11 @@ function LoginFace({ googleError, role, onRoleChange }: LoginProps & { role: Log
       </div>
       <TextField id={`${role}-email`} name="email" label={messages.email} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" spellCheck={false} maxLength={254} placeholder={messages.emailPlaceholder} required error={errors.email}/>
       <PasswordField id={`${role}-password`} name="password" label={messages.password} autoComplete="current-password" placeholder={messages.passwordPlaceholder} maxLength={128} required error={errors.password}/>
-      <div className={styles.forgot}><Link href="/forgot-password">{messages.forgotPassword}</Link></div>
+      <div className={styles.forgot}><Link prefetch={false} href="/forgot-password">{messages.forgotPassword}</Link></div>
       {failure && <Feedback tone="error">{failure}</Feedback>}
       <Button type="submit" pending={pending}>{pending ? messages.pending : messages.submit}{!pending && <Icon name="arrow"/>}</Button>
       <span role="status" className={styles.statusText}>{pending ? messages.status : ""}</span>
     </form>
-    <p className={styles.signupPrompt}>{messages.signupPrompt} <Link href="/sign-up">{messages.signupLink}</Link></p>
+    <p className={styles.signupPrompt}>{messages.signupPrompt} <Link prefetch={false} href="/sign-up">{messages.signupLink}</Link></p>
   </>;
 }

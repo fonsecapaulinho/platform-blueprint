@@ -14,7 +14,7 @@ export const loginMessages = {
     googleFailed: "Google sign-in failed. Please try again.",
     signupPrompt: "Don't have an account?",
     signupLink: "Sign up",
-    googleNotConfigured: "Google sign-in is not configured yet. Set AUTH_SECRET, AUTH_GOOGLE_ID, and AUTH_GOOGLE_SECRET in the environment.",
+    googleNotConfigured: "Google sign-in is currently unavailable. Please use email.",
     email: "Email",
     password: "Password",
     emailPlaceholder: "you@example.com",

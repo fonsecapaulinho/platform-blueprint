@@ -1,7 +1,7 @@
 .shell { min-height: 100svh; padding: 0 clamp(20px, 5vw, 64px); display: flex; flex-direction: column; background: var(--color-canvas); }
 .header { width: 100%; min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-.main { width: 100%; max-width: 440px; flex: 1; margin: 0 auto; padding: 16px 0 32px; display: flex; align-items: center; }
-.card { width: 100%; background: white; padding: clamp(24px, 5vw, 36px); border: 1px solid rgb(255 255 255 / 90%); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.main { width: 100%; min-width: 0; max-width: 440px; flex: 1; margin: 0 auto; padding: 16px 0 32px; display: flex; align-items: center; }
+.card { width: 100%; min-width: 0; overflow-wrap: anywhere; background: white; padding: clamp(24px, 5vw, 36px); border: 1px solid rgb(255 255 255 / 90%); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
 .formHeader { margin-bottom: 24px; }
 .formHeader h1 { font-size: clamp(1.6rem, 5vw, 1.9rem); line-height: 1.2; letter-spacing: -.045em; font-weight: 750; margin-bottom: 8px; }
 .formHeader > p:last-child { color: var(--color-muted); font-size: .9375rem; line-height: 1.5; }
@@ -59,22 +59,22 @@
 }
 
 .footer { padding: var(--space-6) 0; color: var(--color-muted); font-size: .75rem; line-height: 1.5; text-align: center; }
-.loginScene { width: 100%; perspective: 1200px; }
-.loginFlipper { display: grid; transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.4, 0, .2, 1); }
-.loginFlipper[data-flipped="true"] { transform: rotateY(180deg); }
-.loginFace { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: var(--space-8); }
-.loginFace[data-role="teacher"] { transform: rotateY(180deg); }
-.loginFace .formHeader { margin-bottom: var(--space-8); }
-.loginFace .formHeader h1 { margin-bottom: var(--space-3); }
-.loginFace .oauthForm { margin-bottom: var(--space-6); }
-.loginFace .divider { margin-bottom: var(--space-6); }
-.loginFace .form { gap: var(--space-6); }
-.loginFace .roleLabel { display: block; margin-bottom: var(--space-2); }
-.loginFace .rolePicker button { min-height: 44px; }
-.loginFace .rolePicker button:hover { background: white; color: var(--color-ink); }
-.loginFace .forgot { margin-top: 0; }
-.loginFace .forgot a { display: inline-flex; align-items: center; min-height: 44px; }
-.loginFace .signupPrompt { margin-top: var(--space-8); line-height: 1.75; }
-.loginFace label + div { margin-top: var(--space-1); }
-@media (max-width: 480px) { .loginFace { padding: var(--space-6); } }
-@media (prefers-reduced-motion: reduce) { .loginFlipper { transition: none; } }
+.cardScene { width: 100%; min-width: 0; perspective: 1200px; }
+.cardFlipper { display: grid; grid-template-columns: minmax(0, 1fr); transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.4, 0, .2, 1); }
+.cardFlipper[data-flipped="true"] { transform: rotateY(180deg); }
+.cardFace { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: var(--space-8); }
+.cardFace[data-face="back"] { transform: rotateY(180deg); }
+.cardFace .formHeader { margin-bottom: var(--space-8); }
+.cardFace .formHeader h1 { margin-bottom: var(--space-3); }
+.cardFace .oauthForm { margin-bottom: var(--space-6); }
+.cardFace .divider { margin-bottom: var(--space-6); }
+.cardFace .form { gap: var(--space-6); }
+.cardFace .roleLabel { display: block; margin-bottom: var(--space-2); }
+.cardFace .rolePicker button { min-height: 44px; }
+.cardFace .rolePicker button:hover { background: white; color: var(--color-ink); }
+.cardFace .forgot { margin-top: 0; }
+.cardFace .forgot a { display: inline-flex; align-items: center; min-height: 44px; }
+.cardFace .signupPrompt { margin-top: var(--space-8); line-height: 1.75; }
+.cardFace label + div { margin-top: var(--space-1); }
+@media (max-width: 480px) { .cardFace { padding: var(--space-6); } }
+@media (prefers-reduced-motion: reduce) { .cardFlipper { transition: none; } }

@@ -11,5 +11,5 @@ export default function NotFound() {
   const { locale } = useLocale();
   const messages = notFoundMessages[locale];
   useEffect(() => { document.title = `${messages.documentTitle} | BLUEPRINT`; }, [messages.documentTitle]);
-  return <AuthShell><AuthCard><FormHeader title={messages.title} description={messages.description}/><Link className={styles.linkButton} href="/sign-in">{messages.back}</Link></AuthCard></AuthShell>;
+  return <AuthShell><AuthCard><FormHeader title={messages.title} description={messages.description}/><Link prefetch={false} className={styles.linkButton} href="/sign-in">{messages.back}</Link></AuthCard></AuthShell>;
 }

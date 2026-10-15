@@ -33,7 +33,7 @@ export function RecoveryForm() {
     const invalid = emailError(email, { required: messages.emailRequired, invalid: messages.invalidEmail }); setError(invalid); setFailure("");
     if (invalid) { (form.elements.namedItem("email") as HTMLInputElement)?.focus(); return; }
     lock.current = true; setPending(true);
-    try { await mockAuthService.requestRecovery(email); form.reset(); setSent(true); }
+    try { await mockAuthService.requestRecovery(email); sessionStorage.setItem("blueprint.recovery.email", email.trim()); form.reset(); setSent(true); }
     catch { setFailure(messages.requestFailed); }
     finally { lock.current = false; setPending(false); }
   }
@@ -44,8 +44,7 @@ export function RecoveryForm() {
         <span className={styles.successIcon}><Icon name="check"/></span>
         <FormHeader title={messages.sentTitle} description={messages.sentDescription}/>
       </div>
-      <Feedback>{messages.previewNotice}</Feedback>
-      <Link className={styles.linkButton} href="/verify-code">{messages.preview} <Icon name="arrow"/></Link>
+      <Link prefetch={false} className={styles.linkButton} href="/verify-code">{messages.enterCode} <Icon name="arrow"/></Link>
       <Button variant="secondary" onClick={() => { setSent(false); setError(undefined); }}>{messages.useAnotherEmail}</Button>
     </div> : <>
       <FormHeader title={messages.title} description={messages.description}/>
@@ -56,6 +55,6 @@ export function RecoveryForm() {
         <span role="status" className={styles.statusText}>{pending ? messages.status : ""}</span>
       </form>
     </>}
-    <div className={styles.backRow}><Link className={styles.back} href="/sign-in"><Icon name="back"/>{messages.back}</Link></div>
+    <div className={styles.backRow}><Link prefetch={false} className={styles.back} href="/sign-in"><Icon name="back"/>{messages.back}</Link></div>
   </>;
 }

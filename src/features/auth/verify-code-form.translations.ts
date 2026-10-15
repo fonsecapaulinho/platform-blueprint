@@ -7,7 +7,6 @@ export const verifyCodeMessages = {
     description: "Enter your six-digit recovery code.",
     formLabel: "Verify recovery code",
     code: "Recovery code",
-    codeHint: "Code delivery and verification will be connected soon.",
     codeRequired: "Enter a valid 6-digit code.",
     submit: "Continue",
     back: "Back",

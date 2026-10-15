@@ -47,7 +47,6 @@ export function VerifyCodeForm() {
         maxLength={6}
         pattern="[0-9]{6}"
         required
-        hint={messages.codeHint}
         error={error}
         className={styles.codeInput}
       />
@@ -55,10 +54,10 @@ export function VerifyCodeForm() {
     </form>
     <div className={styles.backRow}>
       <span className={styles.recoveryPrompt}>{messages.requestAnother} </span>
-      <Link className={styles.inlineLink} href="/forgot-password">{messages.requestLink}</Link>
+      <Link prefetch={false} className={styles.inlineLink} href="/forgot-password">{messages.requestLink}</Link>
     </div>
     <div className={styles.backRow}>
-      <Link className={styles.back} href="/forgot-password">{messages.back}</Link>
+      <Link prefetch={false} className={styles.back} href="/forgot-password">{messages.back}</Link>
     </div>
   </>;
 }

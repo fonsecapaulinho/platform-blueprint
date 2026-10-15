@@ -28,11 +28,9 @@ export function CompleteSignUpForm() {
 
   return <>
     <FormHeader title={messages.accountTitle}/>
-    {draft === null && <>
-      <Feedback>{messages.accountLinkUnavailable}</Feedback>
-      <p className={styles.signupPrompt}>
-        <Link href="/sign-up">{messages.startSignUp}</Link>
-      </p>
-    </>}
+    <Feedback>{messages.accountLinkUnavailable}</Feedback>
+    <p className={styles.signupPrompt}>
+      <Link prefetch={false} href="/sign-up">{messages.startSignUp}</Link>
+    </p>
   </>;
 }

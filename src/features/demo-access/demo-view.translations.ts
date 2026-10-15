@@ -1,11 +1,10 @@
 import type { Locale } from "@/shared/layout/locale";
 
-export const demoViewMessages: Record<Locale, { documentTitle: string; title: string; description: string; notice: string; back: string }> = {
+export const demoViewMessages: Record<Locale, { documentTitle: string; title: string; description: string; back: string }> = {
   "en-US": {
-    documentTitle: "Demo sign-in",
+    documentTitle: "Sign in",
     title: "Sign-in complete",
-    description: "This demo does not create a session or open an authenticated area.",
-    notice: "Illustrative version. No real account was accessed.",
+    description: "Welcome to BLUEPRINT.",
     back: "Back to sign in",
   },
 };
