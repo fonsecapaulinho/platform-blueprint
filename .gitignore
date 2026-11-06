@@ -9,3 +9,8 @@ out/
 
 .auth-artifacts/
 .auth-audit-tools/
+
+# Cloudflare / OpenNext
+.open-next/
+.wrangler/
+.dev.vars
