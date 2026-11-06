@@ -6,3 +6,6 @@ out/
 !.env.example
 *.log
 .DS_Store
+
+.auth-artifacts/
+.auth-audit-tools/

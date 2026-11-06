@@ -1,0 +1,80 @@
+.shell { min-height: 100svh; padding: 0 clamp(20px, 5vw, 64px); display: flex; flex-direction: column; background: var(--color-canvas); }
+.header { width: 100%; min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.main { width: 100%; min-width: 0; max-width: 440px; flex: 1; margin: 0 auto; padding: 16px 0 32px; display: flex; align-items: center; }
+.card { width: 100%; min-width: 0; overflow-wrap: anywhere; background: white; padding: clamp(24px, 5vw, 36px); border: 1px solid rgb(255 255 255 / 90%); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.formHeader { margin-bottom: 24px; }
+.formHeader h1 { font-size: clamp(1.6rem, 5vw, 1.9rem); line-height: 1.2; letter-spacing: -.045em; font-weight: 750; margin-bottom: 8px; }
+.formHeader > p:last-child { color: var(--color-muted); font-size: .9375rem; line-height: 1.5; }
+.form { display: grid; gap: 18px; }
+.statusText { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.forgot { text-align: right; margin-top: -8px; font-size: .8125rem; font-weight: 600; }
+.back { display: inline-flex; min-height: 44px; gap: 8px; align-items: center; font-size: .875rem; font-weight: 600; }
+.stepBack { display: block; min-height: 44px; margin: 8px auto 0; padding: 8px 16px; border: 0; background: transparent; color: var(--color-muted); font-size: .875rem; font-weight: 600; }
+.stepBack:hover { color: var(--color-primary); }
+.backRow { margin-top: 16px; text-align: center; }
+.recoveryPrompt { color: var(--color-muted); font-size: .8125rem; }
+.inlineLink { font-size: .8125rem; font-weight: 600; }
+.googleButton { border-color: var(--color-border); }
+.oauthForm { margin-bottom: 16px; }
+.divider { display: flex; align-items: center; gap: 12px; color: var(--color-muted); font-size: .75rem; }
+.divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: var(--color-border); }
+.signupPrompt { margin-top: 18px; color: var(--color-muted); font-size: .8125rem; text-align: center; }
+.userIdentity { margin-top: -8px; font-weight: 650; overflow-wrap: anywhere; }
+.userEmail { margin-top: 5px; color: var(--color-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.userRole { margin-top: 8px; color: var(--color-muted); font-size: .875rem; }
+.signOutButton { min-height: 46px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: white; color: var(--color-ink); font-weight: 650; }
+.rolePicker { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface-soft); }
+.rolePicker button { min-height: 42px; border: 0; border-radius: calc(var(--radius-sm) - 3px); background: transparent; color: var(--color-muted); font-size: .875rem; font-weight: 600; }
+.rolePicker button[aria-pressed="true"] { background: white; color: var(--color-ink); box-shadow: 0 1px 4px rgb(16 24 40 / 12%); }
+.roleLabel { color: var(--color-muted); font-size: .75rem; font-weight: 600; }
+.signupRole { min-width: 0; margin: 0; padding: 0; border: 0; }
+.signupRole legend { margin-bottom: 8px; padding: 0; }
+.codeInput { letter-spacing: .25em; text-align: center; font-variant-numeric: tabular-nums; }
+.successHeading { outline: none; }
+.successHeading:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 6px; }
+.successIcon { display: grid; place-items: center; height: 48px; width: 48px; background: var(--color-success-soft); color: var(--color-success); border-radius: 50%; margin-bottom: 20px; }
+.result { display: grid; gap: 16px; }
+.linkButton { min-height: 50px; display: flex; justify-content: center; align-items: center; gap: 12px; border-radius: var(--radius-sm); padding: 12px 18px; color: white; background: var(--color-primary); text-decoration: none; font-size: .9375rem; font-weight: 650; }
+.linkButton:hover { color: white; background: var(--color-primary-hover); }
+@media (max-width: 720px) {
+  .shell { padding: 0 20px; }
+  .header { min-height: 68px; }
+  .main { padding-top: 8px; padding-bottom: 20px; }
+}
+@media (max-width: 360px) { .shell { padding: 0 12px; } .card { padding: 22px 18px; } }
+@media (max-height: 620px) {
+.header { min-height: 38px; }
+.main { padding-top: 0; padding-bottom: 0; }
+.card { padding: 8px 16px; }
+.formHeader { margin-bottom: 6px; }
+.formHeader h1 { margin-bottom: 4px; }
+.form { gap: 6px; }
+.backRow, .signupPrompt { margin-top: 2px; }
+.signupPrompt { font-size: .75rem; }
+.oauthForm { margin-bottom: 6px; }
+.divider { gap: 8px; }
+.button { min-height: 36px; padding: 6px 12px; }
+.rolePicker { padding: 3px; }
+.rolePicker button { min-height: 28px; }
+}
+
+.footer { padding: var(--space-6) 0; color: var(--color-muted); font-size: .75rem; line-height: 1.5; text-align: center; }
+.cardScene { width: 100%; min-width: 0; perspective: 1200px; }
+.cardFlipper { display: grid; grid-template-columns: minmax(0, 1fr); transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.4, 0, .2, 1); }
+.cardFlipper[data-flipped="true"] { transform: rotateY(180deg); }
+.cardFace { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: var(--space-8); }
+.cardFace[data-face="back"] { transform: rotateY(180deg); }
+.cardFace .formHeader { margin-bottom: var(--space-8); }
+.cardFace .formHeader h1 { margin-bottom: var(--space-3); }
+.cardFace .oauthForm { margin-bottom: var(--space-6); }
+.cardFace .divider { margin-bottom: var(--space-6); }
+.cardFace .form { gap: var(--space-6); }
+.cardFace .roleLabel { display: block; margin-bottom: var(--space-2); }
+.cardFace .rolePicker button { min-height: 44px; }
+.cardFace .rolePicker button:hover { background: white; color: var(--color-ink); }
+.cardFace .forgot { margin-top: 0; }
+.cardFace .forgot a { display: inline-flex; align-items: center; min-height: 44px; }
+.cardFace .signupPrompt { margin-top: var(--space-8); line-height: 1.75; }
+.cardFace label + div { margin-top: var(--space-1); }
+@media (max-width: 480px) { .cardFace { padding: var(--space-6); } }
+@media (prefers-reduced-motion: reduce) { .cardFlipper { transition: none; } }

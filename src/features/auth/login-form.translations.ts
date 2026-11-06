@@ -1,0 +1,32 @@
+import type { Locale } from "@/shared/layout/locale";
+
+export const loginMessages = {
+  "en-US": {
+    documentTitle: "Sign in",
+    title: "Sign in to your account",
+    description: "Sign in to continue.",
+    formLabel: "Sign in to the platform",
+    student: "Student",
+    teacher: "Teacher",
+    roleLabel: "Account type",
+    google: "Continue with Google",
+    divider: "or continue with email",
+    googleFailed: "Google sign-in failed. Please try again.",
+    signupPrompt: "Don't have an account?",
+    signupLink: "Sign up",
+    googleNotConfigured: "Google sign-in is currently unavailable. Please use email.",
+    email: "Email",
+    password: "Password",
+    emailPlaceholder: "you@example.com",
+    passwordPlaceholder: "Enter your password",
+    forgotPassword: "Forgot password?",
+    submit: "Sign in",
+    pending: "Signing in…",
+    status: "Checking your access.",
+    emailRequired: "Enter your email.",
+    invalidEmail: "Enter a valid email address.",
+    passwordRequired: "Enter your password.",
+    loginFailed: "Email or password is incorrect.",
+    requestFailed: "Unable to sign in. Please try again.",
+  },
+} satisfies Record<Locale, object>;
