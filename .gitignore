@@ -14,3 +14,6 @@ out/
 .open-next/
 .wrangler/
 .dev.vars
+
+# Cowork/Claude scratch
+Claude outputs/
