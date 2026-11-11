@@ -11,18 +11,23 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
-    "test:browser": "node tests/auth-browser.cjs"
+    "test:browser": "node tests/auth-browser.cjs",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:preview": "opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
-    "next": "16.4.0",
+    "next": "16.4.5",
     "next-auth": "5.0.0-beta.32",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.16",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.158.0"
   }
 }

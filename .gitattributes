@@ -1,0 +1,10 @@
+# The repo is stored with LF. Without this, a Windows checkout or a tool that
+# rewrites files turns every file into a CRLF "change" and buries real diffs.
+* text=auto eol=lf
+
+# Binary: never touch these.
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
