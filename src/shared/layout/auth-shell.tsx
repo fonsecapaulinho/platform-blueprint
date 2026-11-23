@@ -12,7 +12,10 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
       <Brand/>
     </header>
     <main id="main-content" className={styles.main} tabIndex={-1}>{children}</main>
-    <footer className={styles.footer}>{authShellMessages[locale].copyright.replace("{year}", String(new Date().getFullYear()))}</footer>
+    <footer className={styles.footer}>
+      <p className={styles.demoNotice} role="note">{authShellMessages[locale].demoNotice}</p>
+      <p>{authShellMessages[locale].copyright.replace("{year}", String(new Date().getFullYear()))}</p>
+    </footer>
   </div>;
 }
 

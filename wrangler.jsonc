@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "staging",
+  "compatibility_date": "2026-11-06",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Auth.js refuses to run behind a host it doesn't recognise (UntrustedHost)
+  // anywhere that isn't Vercel. Not a secret, so it lives here.
+  "vars": {
+    "AUTH_TRUST_HOST": "true"
+  }
+  // Secrets are NOT set here. Put AUTH_SECRET, AUTH_GOOGLE_ID and
+  // AUTH_GOOGLE_SECRET in the Cloudflare dashboard, or via
+  // `npx wrangler secret put <NAME>`. Never commit them.
+}

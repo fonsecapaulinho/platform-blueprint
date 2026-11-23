@@ -46,6 +46,52 @@ O OAuth envia o usuário ao Google e cria uma sessão de aplicação após o cal
 
 Sem essas credenciais, o botão Google informa que a integração precisa de configuração. O cadastro por Google cria uma sessão autenticada, mas contas, perfis e permissões ainda não são persistidos em banco de dados.
 
+## Deploy (staging)
+
+Ambiente de demonstração no ar: **https://staging.blueprint-fonseca.workers.dev**
+
+Roda em Cloudflare Workers através do adaptador OpenNext, que executa o Next inteiro. Export estático não é possível aqui: `/dashboard`, `/sign-in`, `/sign-up` e a rota do NextAuth são renderizadas sob demanda.
+
+### Publicar manualmente
+
+```sh
+npm run cf:build     # next build + bundle do worker
+npm run cf:preview   # build + worker local, para conferir antes de publicar
+npm run cf:deploy    # build + publicação
+```
+
+O `cf:preview` lê variáveis de `.dev.vars` (copie de `.dev.vars.example`). Esse arquivo é ignorado pelo git.
+
+### Publicar pela CI
+
+`.github/workflows/ci-deploy.yml` roda typecheck, testes, `npm audit --audit-level=critical` e o build do worker a cada push e PR na `develop`. O deploy acontece só em push na `develop`, só depois de tudo passar, e publica o mesmo artefato que foi testado.
+
+Para ligar, o repositório precisa de dois secrets em Settings → Secrets → Actions: `CLOUDFLARE_API_TOKEN` (permissão Workers Scripts: Edit) e `CLOUDFLARE_ACCOUNT_ID`.
+
+Não conecte o repositório pela integração de Git da Cloudflare: ela publica a cada push sem esperar a CI, e o deploy sem verificação ganharia a corrida.
+
+### Segredos do Worker
+
+Nunca em arquivo versionado:
+
+```sh
+npx auth secret                        # gera o valor
+npx wrangler secret put AUTH_SECRET
+npx wrangler secret put AUTH_GOOGLE_ID
+npx wrangler secret put AUTH_GOOGLE_SECRET
+```
+
+`AUTH_SECRET` é obrigatório: sem ele o Auth.js não sobe e as rotas autenticadas respondem 500. As credenciais do Google são opcionais — sem elas o resto do site funciona e só o botão "Continue with Google" falha. A callback a registrar no Google Cloud Console é `https://staging.blueprint-fonseca.workers.dev/api/auth/callback/google`.
+
+`AUTH_TRUST_HOST` fica em `wrangler.jsonc` como var, não como secret: o Auth.js recusa hosts que não reconhece fora da Vercel.
+
+### Observações
+
+- O staging é link público, sem autenticação de rede. Por isso responde `X-Robots-Tag: noindex` e serve um `robots.txt` que bloqueia tudo. Se o cliente pedir acesso restrito, o caminho é Cloudflare Access, que tem faixa gratuita até 50 usuários.
+- Toda tela de acesso exibe o aviso de ambiente de demonstração, vindo do `AuthShell`. Remover quando os serviços reais entrarem.
+- Windows: o OpenNext avisa que não é totalmente compatível. Se o build local falhar de forma estranha, use WSL — a CI roda em Ubuntu e não tem esse problema.
+- Hospedagem é despesa separada, conforme o documento de escopo. Hoje: zero.
+
 ## Estrutura
 
 ```text

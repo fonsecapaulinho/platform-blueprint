@@ -1,0 +1,80 @@
+name: CI and deploy
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+concurrency:
+  group: ci-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, audit and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # npm ci installs exactly what package-lock.json pins.
+      # Never swap this for `npm install` or `npm update`: the deploy must be
+      # reproducible from the commit alone.
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      # Fails only on critical advisories. This is what would have caught
+      # Next 16.4.0. Kept off `high` on purpose: the Cloudflare build chain
+      # pulls dev-only transitive highs that never reach the deployed worker.
+      - name: Security audit
+        run: npm audit --audit-level=critical
+
+      # Runs `next build` and then bundles the Cloudflare worker.
+      - name: Build worker
+        run: npm run cf:build
+
+      # Enable once S1.6 lands Cypress.
+      # - name: End-to-end tests
+      #   uses: cypress-io/github-action@v6
+
+      - name: Upload worker bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-next
+          path: .open-next
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Cloudflare Workers
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Deploys the exact bundle that just passed the checks above,
+      # rather than rebuilding and hoping it matches.
+      - name: Download worker bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: open-next
+          path: .open-next
+
+      - name: Publish
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # wrangler.jsonc already points main at .open-next/worker.js
+          command: deploy
