@@ -1,0 +1,49 @@
+diff --git a/next.config.ts b/next.config.ts
+index 580dbfb..d70a0d9 100644
+--- a/next.config.ts
++++ b/next.config.ts
+@@ -1,6 +1,7 @@
+ import type { NextConfig } from "next";
+ 
+ const nextConfig: NextConfig = {
++  output: "export",
+   poweredByHeader: false,
+   async headers() {
+     return [{
+diff --git a/package.json b/package.json
+index e8d63ba..d85a984 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,9 @@
+   "name": "fonseca-learning",
+   "version": "0.1.0",
+   "private": true,
+-  "engines": { "node": ">=22.0.0" },
++  "engines": {
++    "node": ">=22.0.0"
++  },
+   "scripts": {
+     "dev": "next dev",
+     "build": "next build",
+@@ -10,7 +12,7 @@
+     "typecheck": "tsc --noEmit"
+   },
+   "dependencies": {
+-    "next": "16.4.0",
++    "next": "16.4.5",
+     "react": "19.3.0",
+     "react-dom": "19.3.0"
+   },
+diff --git a/public/_headers b/public/_headers
+new file mode 100644
+index 0000000..01864aa
+--- /dev/null
++++ b/public/_headers
+@@ -0,0 +1,7 @@
++/*
++  X-Content-Type-Options: nosniff
++  X-Frame-Options: DENY
++  Referrer-Policy: strict-origin-when-cross-origin
++  Permissions-Policy: camera=(), microphone=(), geolocation=()
++  Content-Security-Policy: frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
++  X-Robots-Tag: noindex, nofollow
