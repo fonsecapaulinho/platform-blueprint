@@ -1,4 +1,5 @@
 import { mockAssignmentService } from "@/features/assignments/mock-assignment-service";
+import { mockFeedbackService } from "@/features/feedback/mock-feedback-service";
 import { mockLessonService } from "@/features/lessons/mock-lesson-service";
 import { mockStudentService } from "@/features/students/mock-student-service";
 import { mockSubmissionService } from "@/features/submissions/mock-submission-service";
@@ -13,6 +14,7 @@ export const services = {
   lessons: mockLessonService,
   assignments: mockAssignmentService,
   submissions: mockSubmissionService,
+  feedback: mockFeedbackService,
 };
 
 export type Services = typeof services;

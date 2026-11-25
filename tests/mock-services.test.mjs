@@ -113,11 +113,16 @@ test('feedback moves the assignment to reviewed', async () => {
   const pending = await services.submissions.listPendingReview(TEACHER);
   assert.ok(pending.some((s) => s.assignmentId === NEW_ASSIGNMENT));
 
-  const saved = await services.submissions.saveFeedback(`submission-${NEW_ASSIGNMENT}`, TEACHER, {
+  const saved = await services.feedback.save(`submission-${NEW_ASSIGNMENT}`, TEACHER, {
     comment: 'Clear writing. Watch the irregular past forms.',
     awardedPoints: 22,
   });
   assert.equal(saved.teacherId, TEACHER);
+  assert.equal(saved.source, 'teacher');
+  assert.equal(saved.state, 'ready');
+
+  const read = await services.feedback.getForSubmission(`submission-${NEW_ASSIGNMENT}`);
+  assert.equal(read.comment, saved.comment);
 
   const view = await services.assignments.get(NEW_ASSIGNMENT);
   assert.equal(view.status, 'reviewed');
@@ -127,7 +132,7 @@ test('feedback moves the assignment to reviewed', async () => {
 
 test('feedback on a submission that was never handed in is rejected', async () => {
   await assert.rejects(
-    () => services.submissions.saveFeedback('submission-carla-interview', TEACHER, { comment: 'x', awardedPoints: null }),
+    () => services.feedback.save('submission-carla-interview', TEACHER, { comment: 'x', awardedPoints: null }),
     (error) => isServiceError(error) && error.code === 'conflict',
   );
 });

@@ -1,3 +1,11 @@
+import {
+  assignmentSchema,
+  feedbackSchema,
+  lessonSchema,
+  studentSchema,
+  submissionSchema,
+  teacherSchema,
+} from "@/shared/domain";
 import type { Assignment, Feedback, Lesson, Student, Submission, Teacher } from "@/shared/domain";
 
 /**
@@ -179,9 +187,26 @@ export const feedback: Feedback[] = [
   {
     id: "feedback-ana-past",
     submissionId: "submission-ana-past",
+    source: "teacher",
     teacherId: teacher.id,
+    state: "ready",
     comment: "Good control of the regular forms. Two things to work on: \"leaved\" should be \"left\", and in the writing you repeat \"and\" where a full stop would read better. The story itself is clear and well ordered.",
     awardedPoints: 26,
     createdAt: "2026-11-07T09:00:00.000Z",
   },
 ];
+
+/**
+ * Fixtures are hand-written, so a typo here would otherwise surface as a broken
+ * screen rather than as an error. Parsing on import catches it at the first render
+ * in development and on every test run. Skipped in production, where the cost is
+ * paid on every cold start and these fixtures are not meant to ship anyway.
+ */
+if (process.env.NODE_ENV !== "production") {
+  teacherSchema.parse(teacher);
+  students.forEach((student) => studentSchema.parse(student));
+  lessons.forEach((lesson) => lessonSchema.parse(lesson));
+  assignments.forEach((assignment) => assignmentSchema.parse(assignment));
+  submissions.forEach((submission) => submissionSchema.parse(submission));
+  feedback.forEach((entry) => feedbackSchema.parse(entry));
+}
