@@ -19,6 +19,8 @@
 
 O login Google usa Auth.js, OpenID Connect e sessão JWT em cookie. Configure `AUTH_SECRET`, `AUTH_GOOGLE_ID` e `AUTH_GOOGLE_SECRET` fora do repositório. O callback `/dashboard` exige sessão. Não há banco/adapter: identidade e perfil do usuário não são persistidos e os papéis aluno/professor ainda não são autorizados pelo servidor. O papel escolhido durante cadastro é apenas seleção de interface, não uma permissão. Cadastro por e-mail, recuperação por e-mail e códigos de uso único aguardam backend.
 
+O conteúdo das lições é entregue inteiro ao cliente, gabarito incluído. O `correctOptionId` de cada questão de múltipla escolha e o `answer` com suas `alternatives` em cada lacuna fazem parte do objeto `Lesson` que a própria tela do aluno busca, e a correção (`scoreAttempt`) roda no navegador. Na demonstração isso é deliberado, porque não há servidor. Em uso real um aluno lê as respostas no devtools antes de responder, e a nota que o cliente calcula não é confiável. Vale o mesmo princípio já registrado para envio duplicado: o que o navegador faz é experiência, não controle.
+
 O contrato `AuthService` é propositalmente pequeno. A API real de recuperação/redefinição precisará acrescentar token, expiração e tratamento de sessão; não conectar o método demonstrativo de redefinição diretamente a uma conta real.
 
 ## Antes de operar com alunos
@@ -27,6 +29,8 @@ O contrato `AuthService` é propositalmente pequeno. A API real de recuperação
 - Conectar cadastro por e-mail, proteção contra abuso e validação de entrada no servidor.
 - Implementar tokens de recuperação de uso único, expiração e confirmação genérica; validar tudo no servidor.
 - Definir política de senha, HTTPS, CSP completa compatível com Next.js e controles de logs/privacidade.
+- Remover o gabarito da resposta enviada a quem está respondendo: `correctOptionId`, `answer` e `alternatives` não podem sair do servidor para o aluno.
+- Corrigir no servidor e tratar a nota vinda do cliente como entrada não confiável. A correção no navegador passa a ser apenas retorno imediato de interface.
 - Remover credenciais e telas de demonstração do caminho de produção.
 - Rever Permissions-Policy quando áudio/microfone entrar no escopo.
 
