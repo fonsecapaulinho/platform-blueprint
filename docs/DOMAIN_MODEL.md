@@ -9,7 +9,7 @@ and they diff as text when the model changes.
 
 Nullable fields are shown without a marker. These are the nullable ones:
 `Assignment.dueAt`, `Submission.submittedAt`, `Submission.score`, `Attempt.submittedAt`,
-`Attempt.score`, `Feedback.awardedPoints`, `Session.level`. Optional ones are
+`Attempt.score`, `Feedback.teacherId`, `Feedback.awardedPoints`, `Session.level`. Optional ones are
 `Material.description` and `Activity.instructions`.
 
 ## 1. Entities and relationships
@@ -117,7 +117,9 @@ classDiagram
         <<feedbackSchema>>
         +string id
         +string submissionId
+        +FeedbackSource source
         +string teacherId
+        +FeedbackState state
         +string comment
         +number awardedPoints
         +datetime createdAt
@@ -144,7 +146,7 @@ classDiagram
     Attempt ..> Score
 
     Feedback --> Submission : submissionId
-    Feedback --> Teacher : teacherId
+    Feedback "*" --> "0..1" Teacher : teacherId
 ```
 
 Two shapes worth noticing, because they are decisions rather than consequences:
@@ -292,10 +294,38 @@ The transition out of `submitted` is one-way for the student: both `submit()` an
 submission prevention scoped in S4.2, enforced in the service rather than in
 `SubmissionBar`.
 
-## Known gap
+## 4. Feedback: modelled now, generated later
 
-`Feedback` here models only teacher-written, synchronous review. The S1.2 acceptance
-criteria ask for a `source` (AI or teacher) and a processing state, which are not in
-the schema and so are not in this diagram. Adding them makes feedback asynchronous,
-which changes `FeedbackPanel` (S4.6) and `AnswerReview` (S4.5) — pending a product
-decision.
+`Feedback` carries a `source` (`teacher` or `ai`) and a `state`
+(`pending`, `ready` or `failed`) even though nothing generates feedback in this
+delivery. The mock only ever writes `teacher` / `ready`, in one step.
+
+The fields exist now because adding them later would be a migration of every stored
+record, and because they change what the UI must be able to render. Two invariants
+are enforced by the schema rather than left to the caller:
+
+```mermaid
+stateDiagram-v2
+    direction LR
+
+    [*] --> ready : save() — teacher writes it, one step
+    [*] --> pending : generated, not produced in this delivery
+    pending --> ready
+    pending --> failed
+    failed --> pending : retry
+
+    note right of ready
+        Must carry a non-empty comment.
+        A teacher-sourced record must
+        also name its teacherId.
+    end note
+```
+
+What this costs the components, whenever generation does arrive: `FeedbackPanel`
+(S4.6) has to render feedback that exists with no comment yet, and `AnswerReview`
+(S4.5) has to tolerate a `failed` record. Neither needs building now, but neither
+should be written assuming a comment is always there.
+
+`teacherId` is nullable for exactly this reason — generated feedback names no
+teacher. `feedbackDraftSchema`, what `TeacherReviewForm` (S6.3) submits, carries
+only `comment` and `awardedPoints`: the service supplies the rest.

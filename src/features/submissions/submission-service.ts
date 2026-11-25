@@ -1,4 +1,4 @@
-import type { Answer, Assignment, Feedback, FeedbackDraft, Lesson, Student, Submission } from "@/shared/domain";
+import type { Answer, Assignment, Lesson, Student, Submission } from "@/shared/domain";
 
 /** What SubmissionBar (S4.2) sends when the student finishes one activity. */
 export type AttemptDraft = {
@@ -22,6 +22,4 @@ export interface SubmissionService {
   /** Rejects with ServiceError("conflict") if the assignment was already submitted. */
   submit(assignmentId: string): Promise<Submission>;
   listPendingReview(teacherId: string): Promise<SubmissionView[]>;
-  getFeedback(submissionId: string): Promise<Feedback | null>;
-  saveFeedback(submissionId: string, teacherId: string, draft: FeedbackDraft): Promise<Feedback>;
 }

@@ -1,4 +1,4 @@
-import { assignments, feedback, lessons, students, submissions } from "@/shared/data/fixtures";
+import { assignments, lessons, students, submissions } from "@/shared/data/fixtures";
 import { ServiceError, clone, required, transport } from "@/shared/data/mock-transport";
 import type { Activity, Answer, Attempt, Score, Submission } from "@/shared/domain";
 import type { AttemptDraft, SubmissionService, SubmissionView } from "./submission-service";
@@ -120,26 +120,5 @@ export const mockSubmissionService: SubmissionService = {
     transport(() => {
       const owned = new Set(assignments.filter((a) => a.assignedById === teacherId && a.status === "submitted").map((a) => a.id));
       return clone(submissions.filter((s) => owned.has(s.assignmentId)).map(toView));
-    }),
-
-  getFeedback: (submissionId) =>
-    transport(() => {
-      const found = feedback.find((f) => f.submissionId === submissionId);
-      return found === undefined ? null : clone(found);
-    }),
-
-  saveFeedback: (submissionId, teacherId, draft) =>
-    transport(() => {
-      const submission = required(submissions.find((s) => s.id === submissionId), "Submission");
-      if (submission.submittedAt === null) {
-        throw new ServiceError("conflict", "This submission has not been handed in yet.");
-      }
-      const assignment = required(assignments.find((a) => a.id === submission.assignmentId), "Assignment");
-      const saved = { ...draft, id: `feedback-${submissionId}`, submissionId, teacherId, createdAt: new Date().toISOString() };
-      const index = feedback.findIndex((f) => f.submissionId === submissionId);
-      if (index === -1) feedback.push(saved);
-      else feedback[index] = saved;
-      assignment.status = "reviewed";
-      return clone(saved);
     }),
 };

@@ -75,3 +75,21 @@ test('drafts omit the fields the service owns', () => {
   assert.equal(Object.keys(domain.studentDraftSchema.shape).includes('joinedAt'), false);
   assert.equal(Object.keys(domain.feedbackDraftSchema.shape).includes('teacherId'), false);
 });
+
+test('feedback in the ready state must carry a comment', () => {
+  const base = { id: 'f', submissionId: 's', source: 'teacher', teacherId: 't', awardedPoints: null, createdAt: '2026-11-24T12:00:00.000Z' };
+  assert.equal(domain.feedbackSchema.safeParse({ ...base, state: 'ready', comment: '   ' }).success, false);
+  assert.equal(domain.feedbackSchema.safeParse({ ...base, state: 'ready', comment: 'Well argued.' }).success, true);
+});
+
+test('generated feedback may be pending and commentless, but teacher feedback names its teacher', () => {
+  const base = { id: 'f', submissionId: 's', awardedPoints: null, createdAt: '2026-11-24T12:00:00.000Z', comment: '' };
+  assert.equal(domain.feedbackSchema.safeParse({ ...base, source: 'ai', teacherId: null, state: 'pending' }).success, true);
+  assert.equal(domain.feedbackSchema.safeParse({ ...base, source: 'ai', teacherId: null, state: 'failed' }).success, true);
+  assert.equal(domain.feedbackSchema.safeParse({ ...base, source: 'teacher', teacherId: null, state: 'pending' }).success, false);
+});
+
+test('the draft a teacher submits carries neither source nor state', () => {
+  const keys = Object.keys(domain.feedbackDraftSchema.shape);
+  assert.deepEqual(keys.sort(), ['awardedPoints', 'comment']);
+});
