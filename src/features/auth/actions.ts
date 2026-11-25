@@ -1,7 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { students, teacher } from "@/shared/data/fixtures";
 import { signIn, signOut } from "../../../auth";
+import { clearDemoSession, writeDemoSession } from "@/features/session/demo-session";
 
 export async function signInWithGoogle(formData: FormData) {
   const entryRoute = formData.get("flow") === "sign-up" ? "/sign-up" : "/sign-in";
@@ -11,9 +13,13 @@ export async function signInWithGoogle(formData: FormData) {
     redirect(`${entryRoute}?error=google-not-configured`);
   }
 
-  await signIn("google", { redirectTo: entryRoute === "/sign-up" ? `/dashboard?role=${role}` : "/dashboard" });
+  // The role chosen at sign-in becomes the simulated session, so no page has to
+  // read it from the URL. Demonstrative only — see demo-session.ts.
+  await writeDemoSession({ userId: role === "teacher" ? teacher.id : students[0].id, role });
+  await signIn("google", { redirectTo: "/dashboard" });
 }
 
 export async function signOutUser() {
+  await clearDemoSession();
   await signOut({ redirectTo: "/sign-in" });
 }
