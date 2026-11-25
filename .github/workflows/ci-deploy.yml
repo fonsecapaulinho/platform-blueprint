@@ -53,6 +53,13 @@ jobs:
         with:
           name: open-next
           path: .open-next
+          # `.open-next` is a dotted path and upload-artifact skips hidden files
+          # by default, so without this the bundle silently never uploads and
+          # the deploy job fails looking for an artifact that was never there.
+          include-hidden-files: true
+          # A build that produced nothing must fail here rather than leave the
+          # job green and break the deploy one step later.
+          if-no-files-found: error
           retention-days: 7
 
   deploy:
